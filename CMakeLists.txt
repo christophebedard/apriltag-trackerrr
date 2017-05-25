@@ -16,6 +16,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_srvs
   message_generation
   sensor_msgs
+  uvc_camera
+  jpeg_streamer
 )
 
 ## System dependencies are found with CMake's conventions
@@ -111,7 +113,7 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS message_runtime
   LIBRARIES apriltag_trackerrr
-  CATKIN_DEPENDS roscpp rospy std_msgs std_srvs geometry_msgs sensor_msgs 
+  CATKIN_DEPENDS roscpp rospy std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer
 )
 
 ###########
