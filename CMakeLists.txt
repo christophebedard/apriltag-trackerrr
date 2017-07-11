@@ -18,6 +18,8 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   uvc_camera
   jpeg_streamer
+  cv_bridge
+  image_transport
 )
 
 ## System dependencies are found with CMake's conventions
@@ -113,7 +115,7 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS message_runtime
   LIBRARIES apriltag_trackerrr
-  CATKIN_DEPENDS roscpp rospy std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer
+  CATKIN_DEPENDS roscpp rospy std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_transport
 )
 
 ###########
@@ -144,7 +146,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-#add_executable(topswitch_node src/topswitch_node.cpp)
+add_executable(tracking_error_node src/tracking_error.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -159,9 +161,9 @@ include_directories(
 
 ## Specify libraries to link a library or executable target against
 
-#target_link_libraries(robot_node
-#    ${catkin_LIBRARIES}
-#)
+target_link_libraries(tracking_error_node
+    ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
