@@ -33,6 +33,7 @@ Track AprilTags with an RRR robot manipulator.
    git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
+   git clone https://github.com/RIVeR-Lab/apriltags_ros.git
    ````  
 
 3. Compile
