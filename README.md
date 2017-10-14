@@ -35,6 +35,7 @@ Track AprilTags with an RRR robot manipulator.
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
    git clone https://github.com/RIVeR-Lab/apriltags_ros.git
    ````  
+   `camera_umd` (deprecated) is used instead of `libuvc_camera` because of [this](https://github.com/ros-drivers/libuvc_ros/issues/15)
 
 3. Compile
    ````
