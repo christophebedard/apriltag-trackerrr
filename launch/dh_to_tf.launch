@@ -1,0 +1,17 @@
+<launch>
+  <arg name="child_frame" default="world"/>
+  <arg name="frame" default="joint1"/>
+  <arg name="angle_topic" default="theta1"/>
+  <arg name="d" default="0.0"/>
+  <arg name="a" default="0.0"/>
+  <arg name="alpha" default="0.0"/>
+
+  <node pkg="apriltag_trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
+    <param name="child_frame" type="string" value="$(arg child_frame)" />
+    <param name="frame" type="string" value="$(arg frame)" />
+    <param name="angle_topic" type="string" value="$(arg angle_topic)" />
+    <param name="d" type="double" value="$(arg d)" />
+    <param name="a" type="double" value="$(arg a)" />
+    <param name="alpha" type="double" value="$(arg alpha)" />
+  </node>
+</launch>
