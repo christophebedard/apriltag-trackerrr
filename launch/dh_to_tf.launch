@@ -1,17 +1,9 @@
 <launch>
-  <arg name="child_frame" default="world"/>
-  <arg name="frame" default="joint1"/>
-  <arg name="angle_topic" default="theta1"/>
-  <arg name="d" default="0.0"/>
-  <arg name="a" default="0.0"/>
-  <arg name="alpha" default="0.0"/>
+  <node pkg="tf" type="static_transform_publisher" name="joint_origin" args="0.0 0.0 0.0 0.0 0.0 0.0 world joint0 100"/>
+  
+  <rosparam command="load" file="$(find apriltag_trackerrr)/cfg/rrr_robot_example.yaml" />
 
   <node pkg="apriltag_trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
-    <param name="child_frame" type="string" value="$(arg child_frame)" />
-    <param name="frame" type="string" value="$(arg frame)" />
-    <param name="angle_topic" type="string" value="$(arg angle_topic)" />
-    <param name="d" type="double" value="$(arg d)" />
-    <param name="a" type="double" value="$(arg a)" />
-    <param name="alpha" type="double" value="$(arg alpha)" />
+    <param name="joint_id" type="int" value="1" />
   </node>
 </launch>
