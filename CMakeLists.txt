@@ -148,7 +148,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(tracking_error_node src/tracking_error.cpp)
+add_executable(tagtracker_node src/tagtracker.cpp)
 add_executable(dh_to_tf src/dh_to_tf.cpp)
 
 
@@ -164,7 +164,7 @@ add_executable(dh_to_tf src/dh_to_tf.cpp)
 
 ## Specify libraries to link a library or executable target against
 
-target_link_libraries(tracking_error_node
+target_link_libraries(tagtracker_node
     ${catkin_LIBRARIES}
 )
 target_link_libraries(dh_to_tf
