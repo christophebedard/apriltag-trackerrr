@@ -20,6 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   uvc_camera
   jpeg_streamer
   cv_bridge
+  image_geometry
   image_transport
 )
 
@@ -116,7 +117,7 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS message_runtime
   LIBRARIES apriltag_trackerrr
-  CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_transport
+  CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_geometry image_transport
 )
 
 ###########
