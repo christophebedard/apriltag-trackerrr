@@ -1,7 +1,10 @@
 <launch>
-  <arg name="camera" default="camera"/>
-  <arg name="image" default="image_rect"/>
-  <arg name="camera_info" default="camera_info"/>
+  <arg name="camera" default="camera" />
+  <arg name="image" default="image_rect" />
+  <arg name="camera_info" default="camera_info" />
+
+  <!-- launch camera stuff -->
+  <include file="$(find apriltag_trackerrr)/launch/camera.launch" />
 
   <group ns="$(arg camera)">
     <node pkg="apriltags_ros" type="apriltag_detector_node" name="apriltag_detector" output="screen">
@@ -13,9 +16,13 @@
       <param name="projected_optics" type="bool" value="true" />
 
       <rosparam param="tag_descriptions">[
-        {id: 9, size: 0.05, frame_id: tag_9},
-        {id: 27, size: 0.05, frame_id: tag_27}]
+        {id: 9, size: 0.08, frame_id: tag_9},
+        {id: 27, size: 0.08, frame_id: tag_27}]
       </rosparam>
     </node>
   </group>
+
+  <!-- launch rqt_image_view and rviz -->
+  <node pkg="rqt_image_view" type="rqt_image_view" name="image_view" args="/$(arg camera)/tag_detections_image" />
+  <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find apriltag_trackerrr)/cfg/rviz.rviz" />
 </launch>
