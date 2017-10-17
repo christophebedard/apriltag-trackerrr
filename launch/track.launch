@@ -1,0 +1,11 @@
+<launch>
+  <arg name="camera" default="camera" />
+
+  <include file="$(find apriltag_trackerrr)/launch/apriltag_detect.launch">
+    <arg name="camera" value="$(arg camera)" />
+  </include>
+
+  <group ns="$(arg camera)">
+    <node pkg="apriltag_trackerrr" type="tagtracker_node" name="tagtracker" output="screen" />
+  </group>
+</launch>
