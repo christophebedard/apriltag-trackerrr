@@ -3,6 +3,9 @@
 
 #include "apriltags_ros/AprilTagDetectionArray.h"
 #include <ros/ros.h>
+#include <std_msgs/Float64.h>
+#include <geometry_msgs/PoseStamped.h>
+#include <tf/transform_listener.h>
 #include <image_transport/image_transport.h>
 #include <image_geometry/pinhole_camera_model.h>
 #include <cv_bridge/cv_bridge.h>
@@ -14,6 +17,10 @@ static const double LOOP_RATE = 10.0;
 static const std::string CAMERA_NAMESPACE = "camera";
 static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect";
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections";
+static const std::string WORLD_TF_NAME = "/world";
+static const std::string TAG_TF_NAME_PREFIX = "/tag_";
+static const std::string POSITION_COMMAND_TOPIC_NAME = "/command";
+static const std::string TAG_TARGET_POSE_TOPIC_NAME = "/target";
 static const int TARGET_TAG_ID = 27;
 
 class TagTracker
@@ -56,6 +63,7 @@ class TagTracker
 
         std::vector<apriltags_ros::AprilTagDetection> detected_tags_;
 
+        tf::TransformListener tf_listener_;
         image_transport::ImageTransport it_;
         image_geometry::PinholeCameraModel cam_model_;
         /*===========================
@@ -71,6 +79,10 @@ class TagTracker
          *===========================*/
         /* Publisher for image with tracking error info */
         image_transport::Publisher track_image_pub_;
+        /* Publisher for position command */
+        ros::Publisher position_command_pub_;
+        /* Publisher for tag target pose */
+        ros::Publisher tag_target_pose_pub_;
 
         /*===========================
          * Callbacks
@@ -84,6 +96,14 @@ class TagTracker
          * Callback class method for apriltag detection
          */
         void tagPositionCallback(const apriltags_ros::AprilTagDetectionArray::ConstPtr& msg);
+
+        /*===========================
+         * Other utilities
+         *===========================*/
+        /*
+         * Create PoseStamped message from position vector and yaw
+         */
+        geometry_msgs::PoseStamped createPoseStampedFromPosYaw(double yaw, std::string frame);
 
 
 };
