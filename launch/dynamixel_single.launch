@@ -1,0 +1,14 @@
+<launch>
+  <arg name="device_name" default="/dev/ttyUSB0" />
+  <arg name="baud_rate" default="1000000" />
+  <arg name="protocol_version" default="1.0" />
+
+  <include file="$(find dynamixel_workbench_single_manager)/launch/single_manager.launch">
+    <arg name="baud_rate" value="$(arg baud_rate)" />
+    <arg name="device_name" value="$(arg device_name)" />
+    <arg name="protocol_version" value="$(arg protocol_version)" />
+    <remap from="/dynamixel/AX_12A/present_position" to="/q1" />
+  </include>
+
+  <node pkg="apriltag_trackerrr" name="dynamixel_interface_node" type="dynamixel_interface_node" output="screen" />
+</launch>
