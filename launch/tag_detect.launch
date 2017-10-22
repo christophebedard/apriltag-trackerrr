@@ -3,9 +3,6 @@
   <arg name="image" default="image_rect" />
   <arg name="camera_info" default="camera_info" />
 
-  <!-- launch camera stuff -->
-  <include file="$(find apriltag_trackerrr)/launch/camera.launch" />
-
   <group ns="$(arg camera)">
     <node pkg="apriltags_ros" type="apriltag_detector_node" name="apriltag_detector" output="screen">
       <remap from="image_rect" to="$(arg image)" />
