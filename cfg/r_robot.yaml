@@ -1,0 +1,3 @@
+frame_prefix: 'joint'
+angle_topic_prefix: 'q'
+dh_matrix: [0.0, 0.05, 0.0, 0]
