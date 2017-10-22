@@ -23,6 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_geometry
   image_transport
   apriltags_ros
+  dynamixel_workbench_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -118,7 +119,7 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS message_runtime
   LIBRARIES apriltag_trackerrr
-  CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_geometry image_transport apriltags_ros
+  CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_geometry image_transport apriltags_ros dynamixel_workbench_msgs
 )
 
 ###########
@@ -129,6 +130,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+  include ${catkin_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
   include
 )
@@ -151,6 +153,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(tagtracker_node src/tagtracker.cpp)
 add_executable(dh_to_tf src/dh_to_tf.cpp)
+add_executable(dynamixel_interface_node src/dynamixel_interface.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -169,6 +172,9 @@ target_link_libraries(tagtracker_node
     ${catkin_LIBRARIES}
 )
 target_link_libraries(dh_to_tf
+    ${catkin_LIBRARIES}
+)
+target_link_libraries(dynamixel_interface_node
     ${catkin_LIBRARIES}
 )
 

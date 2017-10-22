@@ -8,6 +8,11 @@ Panels:
         - /Status1
         - /TF1
         - /TF1/Frames1
+        - /TF1/Tree1/world1
+        - /TF1/Tree1/world1/joint01
+        - /TF1/Tree1/world1/joint01/joint11
+        - /TF1/Tree1/world1/joint01/joint11/camera1
+        - /Pose1
       Splitter Ratio: 0.5
     Tree Height: 706
   - Class: rviz/Selection
@@ -57,27 +62,51 @@ Visualization Manager:
         All Enabled: false
         camera:
           Value: true
+        joint0:
+          Value: true
+        joint1:
+          Value: true
         tag_27:
           Value: true
         tag_9:
           Value: true
+        world:
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        camera:
-          tag_27:
-            {}
-          tag_9:
-            {}
+        world:
+          joint0:
+            joint1:
+              camera:
+                tag_27:
+                  {}
+                tag_9:
+                  {}
       Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.100000001
+      Class: rviz/Pose
+      Color: 85; 255; 255
+      Enabled: true
+      Head Length: 0.100000001
+      Head Radius: 0.0500000007
+      Name: Pose
+      Shaft Length: 0.25
+      Shaft Radius: 0.0199999996
+      Shape: Arrow
+      Topic: /camera/target
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: camera
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -105,18 +134,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.00568779651
-        Y: 0.512725472
-        Z: -0.454511613
+        X: 0.277965486
+        Y: 0.0352437794
+        Z: -0.454990536
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.669796884
+      Pitch: 1.56979632
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.9435606
+      Yaw: 4.74855423
     Saved: ~
 Window Geometry:
   Displays:
