@@ -1,0 +1,17 @@
+<launch>
+  <arg name="device_name" default="/dev/ttyUSB0" />
+  <arg name="baud_rate" default="1000000" />
+  <arg name="protocol_version" default="1.0" />
+  <arg name="max_dxl_num" value="1" />
+
+  <include file="$(find open_manipulator_dynamixel_ctrl)/launch/dynamixel_controller.launch">
+    <arg name="baud_rate" value="$(arg baud_rate)" />
+    <arg name="device_name" value="$(arg device_name)" />
+    <arg name="protocol_version" value="$(arg protocol_version)" />
+    <arg name="max_dxl_num" value="$(arg max_dxl_num)" />
+
+    <!-- should find a way to get remapping to work
+    <remap from="/robotis/dynamixel/present_states" to="/present_states" />
+    -->
+  </include>
+</launch>

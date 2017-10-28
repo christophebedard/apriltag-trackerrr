@@ -9,7 +9,7 @@ TagTracker::TagTracker(ros::NodeHandle& n)
 
     // setup publishers
     track_image_pub_ = it_.advertise("/"+CAMERA_NAMESPACE+"/"+"tracking_error", 1);
-    position_command_pub_ = n.advertise<std_msgs::Float64>(POSITION_COMMAND_TOPIC_NAME, 100);
+    joint_state_command_pub_ = n.advertise<sensor_msgs::JointState>(JOINT_STATE_COMMAND_TOPIC_NAME, 100);
     tag_target_pose_pub_ = n.advertise<geometry_msgs::PoseStamped>(TAG_TARGET_POSE_TOPIC_NAME, 10);
 }
 
@@ -25,6 +25,12 @@ geometry_msgs::PoseStamped TagTracker::createPoseStampedFromPosYaw(double yaw, s
     pose_msg.header.stamp = ros::Time::now();
     pose_msg.header.frame_id = frame;
     return pose_msg;
+}
+
+sensor_msgs::JointState TagTracker::createJointStateFromAngle(double angle) {
+    sensor_msgs::JointState state_msg;
+    state_msg.position.push_back(angle);
+    return state_msg;
 }
 
 /*===========================
@@ -85,18 +91,14 @@ void TagTracker::update() {
         if (found_target_tag) {
             tf::StampedTransform transform;
             try {
-                tf_listener_.waitForTransform(WORLD_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), ros::Duration(0.5));
-                tf_listener_.lookupTransform(WORLD_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), transform);
+                tf_listener_.waitForTransform(BASE_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), ros::Duration(0.5));
+                tf_listener_.lookupTransform(BASE_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), transform);
             } catch (tf::TransformException ex) {
                 ROS_ERROR("Error looking up tag transform: %s", ex.what());
             }
             double angle = atan2(transform.getOrigin().y(), transform.getOrigin().x());
-            
-            std_msgs::Float64 msg;
-            msg.data = angle;
-            position_command_pub_.publish(msg);
-
-            tag_target_pose_pub_.publish(createPoseStampedFromPosYaw(angle, WORLD_TF_NAME));
+            joint_state_command_pub_.publish(createJointStateFromAngle(angle));
+            tag_target_pose_pub_.publish(createPoseStampedFromPosYaw(angle, BASE_TF_NAME));
         }
 
     } else {

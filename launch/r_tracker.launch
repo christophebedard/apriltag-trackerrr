@@ -12,7 +12,9 @@
 
   <!-- dynamixel -->
   <!-- -->
-  <include file="$(find apriltag_trackerrr)/launch/dynamixel_single.launch" />
+  <include file="$(find apriltag_trackerrr)/launch/dynamixel_controller.launch">
+      <arg name="max_dxl_num" value="1" />
+  </include>
   <!-- -->
 
   <!-- tracker -->
@@ -20,5 +22,7 @@
     <node pkg="apriltag_trackerrr" type="tagtracker_node" name="tagtracker" output="screen" />
   </group>
 
+  <!--
   <node pkg="rqt_ez_publisher" type="rqt_ez_publisher" name="rqt_ez_publisher" />
+  -->
 </launch>

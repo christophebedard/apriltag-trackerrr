@@ -1,9 +1,11 @@
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Float64.h>
+#include <sensor_msgs/JointState.h>
 #include <string>
 
 static const std::string NODE_NAME = "dh_to_tf";
+static const std::string JOINT_STATE_TOPIC = "/robotis/dynamixel/present_states";
 static const int COL_OFFSET = 0;
 static const int COL_D      = 1;
 static const int COL_A      = 2;
@@ -15,7 +17,22 @@ std::vector<double> dh_matrix;
 std::string frame_prefix, angle_topic_prefix, child_frame, frame, angle_topic;
 double offset, d, a, alpha;
 
-void angleCallback(const std_msgs::Float64::ConstPtr& msg){
+void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg) {
+    double theta = offset + msg->position[joint_id-1];
+
+    tf::Matrix3x3 rot(cos(theta), -sin(theta)*cos(alpha),  sin(theta)*sin(alpha),
+                      sin(theta),  cos(theta)*cos(alpha), -cos(theta)*sin(alpha),
+                               0,             sin(alpha),             cos(alpha));
+    tf::Vector3 trans(a*cos(theta),
+                      a*sin(theta),
+                                 d);
+    tf::Transform transform(rot, trans);
+
+    static tf::TransformBroadcaster br;
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), child_frame, frame));
+}
+
+void angleCallback(const std_msgs::Float64::ConstPtr& msg) {
     double theta = offset + msg->data;
 
     tf::Matrix3x3 rot(cos(theta), -sin(theta)*cos(alpha),  sin(theta)*sin(alpha),
@@ -30,7 +47,7 @@ void angleCallback(const std_msgs::Float64::ConstPtr& msg){
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), child_frame, frame));
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     ros::init(argc, argv, NODE_NAME);
     ros::NodeHandle n;
 
@@ -49,7 +66,8 @@ int main(int argc, char** argv){
     a      = dh_matrix[COL_TOTAL * (joint_id - 1) + COL_A];
     alpha  = dh_matrix[COL_TOTAL * (joint_id - 1) + COL_ALPHA];
 
-    ros::Subscriber angle_sub = n.subscribe(angle_topic, 10, &angleCallback);
+    //ros::Subscriber angle_sub = n.subscribe(angle_topic, 10, &angleCallback);
+    ros::Subscriber joint_state_sub = n.subscribe(JOINT_STATE_TOPIC, 10, &jointStateCallback);
     
     ros::spin();
     

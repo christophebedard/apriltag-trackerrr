@@ -10,16 +10,18 @@
 #include <image_geometry/pinhole_camera_model.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
+#include <sensor_msgs/JointState.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <vector>
 
 static const double LOOP_RATE = 10.0;
 static const std::string CAMERA_NAMESPACE = "camera";
 static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect";
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections";
-static const std::string WORLD_TF_NAME = "/world";
+static const std::string BASE_TF_NAME = "/joint0";
 static const std::string TAG_TF_NAME_PREFIX = "/tag_";
-static const std::string POSITION_COMMAND_TOPIC_NAME = "/command";
+static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/robotis/dynamixel/goal_states"; // /command
 static const std::string TAG_TARGET_POSE_TOPIC_NAME = "/target";
 static const int TARGET_TAG_ID = 27;
 
@@ -79,8 +81,8 @@ class TagTracker
          *===========================*/
         /* Publisher for image with tracking error info */
         image_transport::Publisher track_image_pub_;
-        /* Publisher for position command */
-        ros::Publisher position_command_pub_;
+        /* Publisher for joint state command */
+        ros::Publisher joint_state_command_pub_;
         /* Publisher for tag target pose */
         ros::Publisher tag_target_pose_pub_;
 
@@ -105,6 +107,7 @@ class TagTracker
          */
         geometry_msgs::PoseStamped createPoseStampedFromPosYaw(double yaw, std::string frame);
 
+        sensor_msgs::JointState createJointStateFromAngle(double angle);
 
 };
 
