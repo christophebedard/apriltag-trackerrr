@@ -21,7 +21,7 @@ static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect";
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections";
 static const std::string BASE_TF_NAME = "/joint0";
 static const std::string TAG_TF_NAME_PREFIX = "/tag_";
-static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/robotis/dynamixel/goal_states"; // /command
+static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states";
 static const std::string TAG_TARGET_POSE_TOPIC_NAME = "/target";
 static const int TARGET_TAG_ID = 27;
 
