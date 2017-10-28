@@ -8,27 +8,32 @@ Track AprilTags with an RRR robot manipulator.
 
 2. These
    ````
-   sudo apt-get install libv4l-dev ros-kinetic-qt-build ros-kinetic-gazebo-ros-control ros-kinetic-position-controllers ros-kinetic-robotis-math ros-kinetic-moveit
+   sudo apt-get install libv4l-dev \
+   ros-kinetic-qt-build \
+   ros-kinetic-gazebo-ros-control \
+   ros-kinetic-position-controllers \
+   ros-kinetic-robotis-math \
+   ros-kinetic-moveit
    ````
 
 ## Initial setup
 
 1. Create workspace directory and init the catkin workspace
    ````
-   mkdir -p ~/trackrrr_ws/src
-   cd ~/trackrrr_ws/src
+   mkdir -p ~/tracker_ws/src
+   cd ~/tracker_ws/src
    catkin_init_workspace
    ````
 
-2. Clone this repo in the `~/trackrrr_ws/src` folder
+2. Clone this repo in the `~/tracker_ws/src` folder
    ````
-   cd ~/trackrrr_ws/src
+   cd ~/tracker_ws/src
    git clone git@github.com:christophebedard/apriltag_trackerrr.git
    ````  
 
-3. Clone the following packages in the `~/trackrrr_ws/src` folder  
+3. Clone the following packages in the `~/tracker_ws/src` folder  
    ````
-   cd ~/trackrrr_ws/src
+   cd ~/tracker_ws/src
    git clone https://github.com/ros-drivers/camera_umd.git
    git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
@@ -40,7 +45,7 @@ Track AprilTags with an RRR robot manipulator.
 
 3. Compile
    ````
-   cd ~/trackrrr_ws
+   cd ~/tracker_ws
    catkin build
    ````
 
