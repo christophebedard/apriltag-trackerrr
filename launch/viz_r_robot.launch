@@ -3,8 +3,8 @@
   
   <rosparam command="load" file="$(find apriltag_trackerrr)/cfg/r_robot.yaml" />
 
-  <node pkg="apriltag_trackerrr" name="dh_to_tf_1" type="dh_to_tf" output="screen">
-    <param name="joint_id" type="int" value="1" />
+  <node pkg="apriltag_trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
+    <param name="num_joints" type="int" value="1" />
   </node>
   
   <node pkg="tf" type="static_transform_publisher" name="end_effector_camera_tf" args="0.0 0.0 0.0 -1.5708 0.0 -1.5708 joint1 camera 100"/>
