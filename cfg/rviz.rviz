@@ -8,10 +8,6 @@ Panels:
         - /Status1
         - /TF1
         - /TF1/Frames1
-        - /TF1/Tree1/world1
-        - /TF1/Tree1/world1/joint01
-        - /TF1/Tree1/world1/joint01/joint11
-        - /TF1/Tree1/world1/joint01/joint11/camera1
         - /Pose1
       Splitter Ratio: 0.5
     Tree Height: 706
@@ -66,6 +62,8 @@ Visualization Manager:
           Value: true
         joint1:
           Value: true
+        joint2:
+          Value: true
         tag_27:
           Value: true
         tag_9:
@@ -81,11 +79,12 @@ Visualization Manager:
         world:
           joint0:
             joint1:
-              camera:
-                tag_27:
-                  {}
-                tag_9:
-                  {}
+              joint2:
+                camera:
+                  tag_27:
+                    {}
+                  tag_9:
+                    {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -100,7 +99,7 @@ Visualization Manager:
       Shaft Length: 0.25
       Shaft Radius: 0.0199999996
       Shape: Arrow
-      Topic: /camera/target
+      Topic: /target
       Unreliable: false
       Value: true
   Enabled: true
@@ -142,10 +141,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.56979632
+      Pitch: 0.694796324
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.74855423
+      Yaw: 4.70855045
     Saved: ~
 Window Geometry:
   Displays:

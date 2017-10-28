@@ -1,0 +1,15 @@
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="joint_origin" args="0.0 0.0 0.0 0.0 0.0 0.0 /world /joint0 100"/>
+  
+  <rosparam command="load" file="$(find apriltag_trackerrr)/cfg/rr_robot.yaml" />
+
+  <node pkg="apriltag_trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
+    <param name="num_joints" type="int" value="2" />
+  </node>
+  
+  <node pkg="tf" type="static_transform_publisher" name="end_effector_camera_tf" args="0.0 0.0 0.05 -1.5708 0.0 -1.5708 joint2 camera 100"/>
+  
+  <!--
+  <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find apriltag_trackerrr)/cfg/rviz.rviz" />
+  -->
+</launch>

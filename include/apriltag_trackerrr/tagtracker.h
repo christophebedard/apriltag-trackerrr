@@ -20,6 +20,7 @@ static const std::string CAMERA_NAMESPACE = "camera";
 static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect";
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections";
 static const std::string BASE_TF_NAME = "/joint0";
+static const std::string TILT_TF_NAME = "/joint1";
 static const std::string TAG_TF_NAME_PREFIX = "/tag_";
 static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states";
 static const std::string TAG_TARGET_POSE_TOPIC_NAME = "/target";
@@ -107,7 +108,7 @@ class TagTracker
          */
         geometry_msgs::PoseStamped createPoseStampedFromPosYaw(double yaw, std::string frame);
 
-        sensor_msgs::JointState createJointStateFromAngle(double angle);
+        sensor_msgs::JointState createJointStateFromAngles(std::vector<double> angles);
 
 };
 

@@ -8,12 +8,12 @@
   <include file="$(find apriltag_trackerrr)/launch/tag_detect.launch" />
 
   <!-- viz -->
-  <include file="$(find apriltag_trackerrr)/launch/viz_r_robot.launch" />
+  <include file="$(find apriltag_trackerrr)/launch/viz_rr_robot.launch" />
 
   <!-- dynamixel -->
   <!-- -->
   <include file="$(find apriltag_trackerrr)/launch/dynamixel_controller.launch">
-      <arg name="max_dxl_num" value="1" />
+      <arg name="max_dxl_num" value="2" />
   </include>
   <!-- -->
 
