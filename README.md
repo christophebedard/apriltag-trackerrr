@@ -6,9 +6,9 @@ Track AprilTags with an RRR robot manipulator.
 
 1. [ROS kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 
-2. libv4l and qt-build
+2. These
    ````
-   sudo apt-get install libv4l-dev ros-kinetic-qt-build
+   sudo apt-get install libv4l-dev ros-kinetic-qt-build ros-kinetic-gazebo-ros-control ros-kinetic-position-controllers ros-kinetic-robotis-math ros-kinetic-moveit
    ````
 
 ## Initial setup
@@ -33,6 +33,7 @@ Track AprilTags with an RRR robot manipulator.
    git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
+   git clone https://github.com/christophebedard/open_manipulator.git
    git clone https://github.com/RIVeR-Lab/apriltags_ros.git
    ````  
    `camera_umd` (deprecated) is used instead of `libuvc_camera` because of [this](https://github.com/ros-drivers/libuvc_ros/issues/15)
