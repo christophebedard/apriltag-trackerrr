@@ -6,6 +6,4 @@
   <node pkg="apriltag_trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
     <param name="num_joints" type="int" value="3" />
   </node>
-
-  <node pkg="tf" type="static_transform_publisher" name="end_effector_camera_tf" args="0.0 0.0 0.0 -1.5708 0.0 -1.5708 joint3 camera 100"/>
 </launch>

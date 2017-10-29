@@ -3,3 +3,10 @@ angle_topic_prefix: 'q'
 dh_matrix: [0.0, 0.25, 0.0, rad(-pi/2),
             0.0,  0.0, 0.5,        0.0,
             0.0,  0.0, 0.5,  rad(pi/2)]
+end_effector:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+  roll: rad(-pi/2)
+  pitch: 0.0
+  yaw: rad(-pi/2)
