@@ -7,7 +7,7 @@
     <param name="num_joints" type="int" value="2" />
   </node>
   
-  <node pkg="tf" type="static_transform_publisher" name="end_effector_camera_tf" args="0.0 0.0 0.05 -1.5708 0.0 -1.5708 joint2 camera 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="end_effector_camera_tf" args="0.0 0.0 0.03 -1.5708 0.0 -1.5708 joint2 camera 100"/>
   
   <!--
   <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find apriltag_trackerrr)/cfg/rviz.rviz" />

@@ -19,11 +19,10 @@ static const double LOOP_RATE = 10.0;
 static const std::string CAMERA_NAMESPACE = "camera";
 static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect";
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections";
-static const std::string BASE_TF_NAME = "/joint0";
-static const std::string TILT_TF_NAME = "/joint1";
+static const std::string JOINT_TF_NAME_PREFIX = "/joint";
+static const std::string TAG_TARGET_POSE_TOPIC_NAME_PREFIX = "/target";
 static const std::string TAG_TF_NAME_PREFIX = "/tag_";
 static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states";
-static const std::string TAG_TARGET_POSE_TOPIC_NAME = "/target";
 static const int TARGET_TAG_ID = 27;
 
 class TagTracker
@@ -32,7 +31,7 @@ class TagTracker
         /*
          * Constructor
          */
-        TagTracker(ros::NodeHandle& n);
+        TagTracker(ros::NodeHandle& n, int dof);
         /*
          * Destructor
          */
@@ -64,6 +63,9 @@ class TagTracker
         bool is_running_slowly_;
         double loop_hz_;
 
+        int dof_;
+        std::vector<std::string> frames_;
+
         std::vector<apriltags_ros::AprilTagDetection> detected_tags_;
 
         tf::TransformListener tf_listener_;
@@ -84,8 +86,8 @@ class TagTracker
         image_transport::Publisher track_image_pub_;
         /* Publisher for joint state command */
         ros::Publisher joint_state_command_pub_;
-        /* Publisher for tag target pose */
-        ros::Publisher tag_target_pose_pub_;
+        /* Publishers for tag target pose */
+        std::vector<ros::Publisher> tag_target_pose_pubs_;
 
         /*===========================
          * Callbacks
@@ -101,14 +103,27 @@ class TagTracker
         void tagPositionCallback(const apriltags_ros::AprilTagDetectionArray::ConstPtr& msg);
 
         /*===========================
-         * Other utilities
+         * Utilities
          *===========================*/
         /*
-         * Create PoseStamped message from position vector and yaw
+         * Create PoseStamped messages from angles and frames
          */
-        geometry_msgs::PoseStamped createPoseStampedFromPosYaw(double yaw, std::string frame);
+        std::vector<geometry_msgs::PoseStamped> createPoseStampedVectorFromAngles(std::vector<double> angles);
 
+        /*
+         * Create JointState message from angles vector
+         */
         sensor_msgs::JointState createJointStateFromAngles(std::vector<double> angles);
+
+        /*
+         * Check if tag ID is detected
+         */
+        bool isTagDetected(int tag_id);
+
+        /*
+         * Publish target poses from vector
+         */
+        void publishTargetPoses(std::vector<geometry_msgs::PoseStamped> poses);
 
 };
 

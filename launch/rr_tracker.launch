@@ -1,5 +1,6 @@
 <launch>
   <arg name="camera" default="camera" />
+  <arg name="dof" default="2" />
 
   <!-- camera -->
   <include file="$(find apriltag_trackerrr)/launch/camera.launch" />
@@ -19,6 +20,8 @@
 
   <!-- tracker -->
   <group ns="$(arg camera)">
-    <node pkg="apriltag_trackerrr" type="tagtracker_node" name="tagtracker" output="screen" />
+    <node pkg="apriltag_trackerrr" type="tagtracker_node" name="tagtracker" output="screen">
+      <param name="dof" value="$(arg dof)" />
+    </node>
   </group>
 </launch>

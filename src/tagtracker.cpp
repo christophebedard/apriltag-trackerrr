@@ -1,7 +1,7 @@
 #include "apriltag_trackerrr/tagtracker.h"
 
-TagTracker::TagTracker(ros::NodeHandle& n)
-    : n_(n), it_(n), loop_hz_(LOOP_RATE)
+TagTracker::TagTracker(ros::NodeHandle& n, int dof)
+    : n_(n), it_(n), loop_hz_(LOOP_RATE), dof_(dof)
 {
     // setup subscribers
     image_sub_ = it_.subscribeCamera("/"+CAMERA_NAMESPACE+"/"+IMAGE_RECT_TOPIC_NAME, 100, &TagTracker::imageCallback, this);
@@ -10,27 +10,51 @@ TagTracker::TagTracker(ros::NodeHandle& n)
     // setup publishers
     track_image_pub_ = it_.advertise("/"+CAMERA_NAMESPACE+"/"+"tracking_error", 1);
     joint_state_command_pub_ = n.advertise<sensor_msgs::JointState>(JOINT_STATE_COMMAND_TOPIC_NAME, 100);
-    tag_target_pose_pub_ = n.advertise<geometry_msgs::PoseStamped>(TAG_TARGET_POSE_TOPIC_NAME, 10);
+    
+    // setup DoF-dependent stuff
+    for (int i = 0; i < dof_; i++) {
+        tag_target_pose_pubs_.push_back(n.advertise<geometry_msgs::PoseStamped>(TAG_TARGET_POSE_TOPIC_NAME_PREFIX + std::to_string(i+1), 10));
+        frames_.push_back(JOINT_TF_NAME_PREFIX + std::to_string(i));
+    }
 }
 
 TagTracker::~TagTracker()
 {
 }
 
-geometry_msgs::PoseStamped TagTracker::createPoseStampedFromPosYaw(double yaw, std::string frame) {
-    geometry_msgs::PoseStamped pose_msg;
-    pose_msg.pose.position.x = 0.0;
-    pose_msg.pose.position.y = 0.0;
-    pose_msg.pose.orientation = tf::createQuaternionMsgFromYaw(yaw);
-    pose_msg.header.stamp = ros::Time::now();
-    pose_msg.header.frame_id = frame;
-    return pose_msg;
+/*===========================
+ * Utilities
+ *===========================*/
+
+std::vector<geometry_msgs::PoseStamped> TagTracker::createPoseStampedVectorFromAngles(std::vector<double> angles) {
+    std::vector<geometry_msgs::PoseStamped> vec;
+    for (int i = 0; i < dof_; i++) {
+        geometry_msgs::PoseStamped pose_msg;
+        pose_msg.pose.orientation = tf::createQuaternionMsgFromYaw(angles[i]);
+        pose_msg.header.stamp = ros::Time::now();
+        pose_msg.header.frame_id = frames_[i];
+        vec.push_back(pose_msg);
+    }
+    return vec;
+}
+
+void TagTracker::publishTargetPoses(std::vector<geometry_msgs::PoseStamped> poses) {
+    for (int i = 0; i < dof_; i++) {
+        tag_target_pose_pubs_[i].publish(poses[i]);
+    }
 }
 
 sensor_msgs::JointState TagTracker::createJointStateFromAngles(std::vector<double> angles) {
     sensor_msgs::JointState state_msg;
     state_msg.position = angles;
     return state_msg;
+}
+
+bool TagTracker::isTagDetected(int tag_id) {
+    for (apriltags_ros::AprilTagDetection tag : detected_tags_) {
+        if (tag.id == tag_id) { return true; }
+    }
+    return false;
 }
 
 /*===========================
@@ -65,7 +89,6 @@ void TagTracker::imageCallback(const sensor_msgs::ImageConstPtr& msg, const sens
         cv::arrowedLine(cv_ptr->image, middle, uv, CV_RGB(255,0,0));
     }
 
-
     // output modified video stream
     track_image_pub_.publish(cv_ptr->toImageMsg());
 }
@@ -81,36 +104,34 @@ void TagTracker::tagPositionCallback(const apriltags_ros::AprilTagDetectionArray
 
 void TagTracker::update() {
     if (!detected_tags_.empty()) {
-        // not empty; found tag(s)
-        bool found_target_tag = false;
-        for (apriltags_ros::AprilTagDetection tag : detected_tags_) {
-            //ROS_INFO_STREAM(tag.id);
-            if (tag.id == TARGET_TAG_ID) { found_target_tag = true; }
-        }
-
-        if (found_target_tag) {
-            tf::StampedTransform transform1;
-            tf::StampedTransform transform2;
+        if (isTagDetected(TARGET_TAG_ID)) {
+            // lookup transforms
+            std::vector<tf::StampedTransform> transforms;
             try {
-                tf_listener_.waitForTransform(BASE_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), ros::Duration(0.5));
-                tf_listener_.lookupTransform(BASE_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), transform1);
-
-                tf_listener_.waitForTransform(TILT_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), ros::Duration(0.5));
-                tf_listener_.lookupTransform(TILT_TF_NAME, TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), transform2);
+                for (int i = 0; i < dof_; i++) {
+                    tf::StampedTransform stf;
+                    tf_listener_.waitForTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), ros::Duration(0.5));
+                    tf_listener_.lookupTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), stf);
+                    // assuming the transform lookup works is (probably) a bad idea
+                    transforms.push_back(stf);
+                }
             } catch (tf::TransformException ex) {
                 ROS_ERROR("Error looking up tag transform: %s", ex.what());
             }
+
+            // calculate angles
             std::vector<double> angles;
-            angles.push_back(atan2(transform1.getOrigin().y(), transform1.getOrigin().x()));
-            angles.push_back(atan2(transform2.getOrigin().y(), transform2.getOrigin().x()));
+            for (int i = 0; i < dof_; i++) {
+                angles.push_back(atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x()));
+            }
+
+            // publish results
             joint_state_command_pub_.publish(createJointStateFromAngles(angles));
-            tag_target_pose_pub_.publish(createPoseStampedFromPosYaw(angles[0], BASE_TF_NAME));
-            tag_target_pose_pub_.publish(createPoseStampedFromPosYaw(angles[1], TILT_TF_NAME));
+            publishTargetPoses(createPoseStampedVectorFromAngles(angles));
         }
 
     } else {
         // empty; didn't find tag
-        //ROS_INFO_STREAM("DID NOT find tag");
     }
 }
 
@@ -143,11 +164,11 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "tagtracker");
     ros::NodeHandle n;
     
-    //ros::NodeHandle n_p("~");
-    //int robot_id;
-    //n_p.getParam("robot_id", robot_id);
+    ros::NodeHandle n_p("~");
+    int dof;
+    n_p.getParam("dof", dof);
     
-    TagTracker tag_tracker(n);
+    TagTracker tag_tracker(n, dof);
     
     try
     {
