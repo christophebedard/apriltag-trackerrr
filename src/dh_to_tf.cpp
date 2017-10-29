@@ -7,6 +7,8 @@
 static const std::string NODE_NAME = "dh_to_tf";
 static const std::string JOINT_STATE_TOPIC = "/motors/present_states";
 static const std::string END_EFFECTOR_TF_NAME = "/camera";
+static const std::string FRAME_TF_NAME_PREFIX = "/joint";
+static const std::string ANGLE_TOPIC_PREFIX = "q";
 static const int COL_OFFSET = 0;
 static const int COL_D      = 1;
 static const int COL_A      = 2;
@@ -15,7 +17,6 @@ static const int COL_TOTAL  = 4;
 
 int num_joints;
 std::vector<double> dh_matrix;
-std::string frame_prefix, angle_topic_prefix;
 std::vector<std::string> child_frames, frames, angle_topics;
 std::vector<double> offset, d, a, alpha;
 double end_effector_x, end_effector_y, end_effector_z, end_effector_roll, end_effector_pitch, end_effector_yaw;
@@ -64,8 +65,6 @@ int main(int argc, char** argv) {
 
     ros::NodeHandle n_p("~");
     n_p.getParam("num_joints", num_joints);
-    n_p.getParam("/frame_prefix", frame_prefix);
-    n_p.getParam("/angle_topic_prefix", angle_topic_prefix);
     n_p.getParam("/dh_matrix", dh_matrix);
     n_p.getParam("/end_effector/x", end_effector_x);
     n_p.getParam("/end_effector/y", end_effector_y);
@@ -75,9 +74,9 @@ int main(int argc, char** argv) {
     n_p.getParam("/end_effector/yaw", end_effector_yaw);
 
     for (int i = 1; i <= num_joints; i++) {
-        child_frames.push_back(frame_prefix + std::to_string(i - 1));
-        frames.push_back(frame_prefix + std::to_string(i));
-        //angle_topics.push_back(angle_topic_prefix + std::to_string(i));
+        child_frames.push_back(FRAME_TF_NAME_PREFIX + std::to_string(i - 1));
+        frames.push_back(FRAME_TF_NAME_PREFIX + std::to_string(i));
+        //angle_topics.push_back(ANGLE_TOPIC_PREFIX + std::to_string(i));
 
         offset.push_back(dh_matrix[COL_TOTAL * (i - 1) + COL_OFFSET]);
         d.push_back(dh_matrix[COL_TOTAL * (i - 1) + COL_D]);
