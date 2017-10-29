@@ -15,7 +15,7 @@ static const int COL_A      = 2;
 static const int COL_ALPHA  = 3;
 static const int COL_TOTAL  = 4;
 
-int num_joints;
+int dof;
 std::vector<double> dh_matrix;
 std::vector<std::string> child_frames, frames, angle_topics;
 std::vector<double> offset, d, a, alpha;
@@ -24,7 +24,7 @@ tf::Transform end_effector_tf;
 
 void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg) {
     static tf::TransformBroadcaster br;
-    for (int i = 1; i <= num_joints; i++) {
+    for (int i = 1; i <= dof; i++) {
         int idx = i - 1;
         double theta = offset[idx] + msg->position[idx];
 
@@ -39,7 +39,7 @@ void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg) {
         br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), child_frames[idx], frames[idx]));
     }
     // also publish end effector tf
-    br.sendTransform(tf::StampedTransform(end_effector_tf, ros::Time::now(), frames[num_joints-1], END_EFFECTOR_TF_NAME));
+    br.sendTransform(tf::StampedTransform(end_effector_tf, ros::Time::now(), frames[dof-1], END_EFFECTOR_TF_NAME));
 }
 
 /*
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle n;
 
     ros::NodeHandle n_p("~");
-    n_p.getParam("num_joints", num_joints);
+    n_p.getParam("dof", dof);
     n_p.getParam("/dh_matrix", dh_matrix);
     n_p.getParam("/end_effector/x", end_effector_x);
     n_p.getParam("/end_effector/y", end_effector_y);
@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
     n_p.getParam("/end_effector/pitch", end_effector_pitch);
     n_p.getParam("/end_effector/yaw", end_effector_yaw);
 
-    for (int i = 1; i <= num_joints; i++) {
+    for (int i = 1; i <= dof; i++) {
         child_frames.push_back(FRAME_TF_NAME_PREFIX + std::to_string(i - 1));
         frames.push_back(FRAME_TF_NAME_PREFIX + std::to_string(i));
         //angle_topics.push_back(ANGLE_TOPIC_PREFIX + std::to_string(i));
