@@ -1,3 +1,9 @@
+/**
+ * \file dynamixel_interface.cpp
+ * \brief NOT USED (basic interface for dynamixel_workbench_single_manager/single_manager.launch, used by dynamixel_single.launch)
+ * \author christophebedard
+ */
+
 #include <string>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
@@ -23,9 +29,10 @@ ros::ServiceClient position_command_srv;
 
 int last_pos = 0;
 
-/*
- * Callback function for Dynamixel AX-12A info message
- * Republishes equivalent in radians
+/**
+ * \brief Callback function for Dynamixel AX-12A info message. Republishes equivalent in radians.
+ *
+ * \param msg : constptr to dynamixel AX info message.
  */
 void infoCallback(const dynamixel_workbench_msgs::AX::ConstPtr& msg){
     std_msgs::Float64 pos_msg;
@@ -33,9 +40,10 @@ void infoCallback(const dynamixel_workbench_msgs::AX::ConstPtr& msg){
     position_pub.publish(pos_msg);
 }
 
-/*
- * Callback function for position command
- * Calls Dynamixel position command from position command in radians
+/**
+ * \brief Callback function for position command. Calls Dynamixel position command from position command in radians.
+ *
+ * \param msg : constptr to angle command message.
  */
 void positionCommandCallback(const std_msgs::Float64::ConstPtr& msg){
     int new_pos = (int)((DYNAMIXEL_POSITION_RES_MAX - DYNAMIXEL_POSITION_RES_MIN)*((msg->data - DYNAMIXEL_POSITION_ANGLE_MIN)/(DYNAMIXEL_POSITION_ANGLE_MAX - DYNAMIXEL_POSITION_ANGLE_MIN))) + DYNAMIXEL_POSITION_RES_MIN;
@@ -55,8 +63,9 @@ void positionCommandCallback(const std_msgs::Float64::ConstPtr& msg){
     position_command_srv.call(srv);
 }
 
-/*
- * Function for torque enabling
+/**
+ * \brief Function for torque enabling.
+ * Calls service with correct parameter.
  */
 void enableTorque() {
     dynamixel_workbench_msgs::DynamixelCommand srv;
@@ -66,6 +75,9 @@ void enableTorque() {
     position_command_srv.call(srv);
 }
 
+/**
+ * \brief main.
+ */
 int main(int argc, char** argv){
     ros::init(argc, argv, NODE_NAME);
     ros::NodeHandle n;

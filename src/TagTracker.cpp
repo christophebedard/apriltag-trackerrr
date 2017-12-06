@@ -1,7 +1,13 @@
-#include "trackerrr/tagtracker.h"
+/**
+ * \file TagTracker.cpp
+ * \brief TagTracker class implementation
+ * \author christophebedard
+ */
+
+#include "trackerrr/TagTracker.h"
 
 TagTracker::TagTracker(ros::NodeHandle& n, int dof)
-    : n_(n), it_(n), loop_hz_(LOOP_RATE), dof_(dof)
+    : n_(n), it_(n), dof_(dof)
 {
     // setup subscribers
     image_sub_ = it_.subscribeCamera("/"+CAMERA_NAMESPACE+"/"+IMAGE_RECT_TOPIC_NAME, 100, &TagTracker::imageCallback, this);
@@ -18,15 +24,14 @@ TagTracker::TagTracker(ros::NodeHandle& n, int dof)
     }
 }
 
-TagTracker::~TagTracker()
-{
+TagTracker::~TagTracker() {
 }
 
 /*===========================
  * Utilities
  *===========================*/
 
-std::vector<geometry_msgs::PoseStamped> TagTracker::createPoseStampedVectorFromAngles(std::vector<double> angles) {
+std::vector<geometry_msgs::PoseStamped> TagTracker::createPoseStampedVectorFromAngles(const std::vector<double>& angles) {
     std::vector<geometry_msgs::PoseStamped> vec;
     for (int i = 0; i < dof_; i++) {
         geometry_msgs::PoseStamped pose_msg;
@@ -38,13 +43,13 @@ std::vector<geometry_msgs::PoseStamped> TagTracker::createPoseStampedVectorFromA
     return vec;
 }
 
-void TagTracker::publishTargetPoses(std::vector<geometry_msgs::PoseStamped> poses) {
+void TagTracker::publishTargetPoses(const std::vector<geometry_msgs::PoseStamped>& poses) {
     for (int i = 0; i < dof_; i++) {
         tag_target_pose_pubs_[i].publish(poses[i]);
     }
 }
 
-sensor_msgs::JointState TagTracker::createJointStateFromAngles(std::vector<double> angles) {
+sensor_msgs::JointState TagTracker::createJointStateFromAngles(const std::vector<double>& angles) {
     sensor_msgs::JointState state_msg;
     state_msg.position = angles;
     return state_msg;
@@ -135,23 +140,18 @@ void TagTracker::update() {
     }
 }
 
-void TagTracker::spinOnce()
-{
+void TagTracker::spinOnce() {
     update();
     ros::spinOnce();
 }
 
-void TagTracker::spin()
-{
-    ros::Rate rate(loop_hz_);
+void TagTracker::spin() {
+    ros::Rate rate(LOOP_RATE);
     
-    while (ros::ok())
-    {
+    while (ros::ok()) {
         spinOnce();
         
-        is_running_slowly_ = !rate.sleep();
-        if (is_running_slowly_)
-        {
+        if (!rate.sleep()) {
             ROS_WARN("[TAGTRACKER] Loop running slowly.");
         }
     }
@@ -159,8 +159,7 @@ void TagTracker::spin()
 
 // ---------------------------
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     ros::init(argc, argv, "tagtracker");
     ros::NodeHandle n;
     

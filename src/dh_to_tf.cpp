@@ -1,3 +1,9 @@
+/**
+ * \file dh_to_tf.cpp
+ * \brief Helper node that subscribes to a JointState topic and publishes the corresponding transforms
+ * \author christophebedard
+ */
+
 #include <string>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
@@ -22,6 +28,11 @@ std::vector<double> offset, d, a, alpha;
 double end_effector_x, end_effector_y, end_effector_z, end_effector_roll, end_effector_pitch, end_effector_yaw;
 tf::Transform end_effector_tf;
 
+/**
+ * \brief JointState callback. Publishes corresponding transforms.
+ *
+ * \param msg : constptr to JointState message.
+ */
 void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg) {
     static tf::TransformBroadcaster br;
     for (int i = 1; i <= dof; i++) {
@@ -59,6 +70,9 @@ void angleCallback(const std_msgs::Float64::ConstPtr& msg) {
 }
 */
 
+/**
+ * \brief main.
+ */
 int main(int argc, char** argv) {
     ros::init(argc, argv, NODE_NAME);
     ros::NodeHandle n;
