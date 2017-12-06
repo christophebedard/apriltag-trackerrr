@@ -31,10 +31,10 @@ static const std::string TAG_TF_NAME_PREFIX = "/tag_";
 static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states";
 static const int TARGET_TAG_ID = 27;
 
-/** \class Quad
- * \brief class which simulates the quadcopter.
+/** \class TagTracker
+ * \brief class which tracks an apriltag.
  *
- * It moves to a given setpoint with simple PIDs and publishes a tf of its current pose.
+ * (something here).
  */
 class TagTracker
 {
