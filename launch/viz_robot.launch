@@ -3,9 +3,9 @@
 
   <node pkg="tf" type="static_transform_publisher" name="joint_origin" args="0.0 0.0 0.0 0.0 0.0 0.0 world joint0 100"/>
   
-  <rosparam command="load" file="$(find apriltag_trackerrr)/cfg/robot_r$(arg dof).yaml" />
+  <rosparam command="load" file="$(find trackerrr)/cfg/robot_r$(arg dof).yaml" />
 
-  <node pkg="apriltag_trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
+  <node pkg="trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
     <param name="dof" type="int" value="$(arg dof)" />
   </node>
 </launch>

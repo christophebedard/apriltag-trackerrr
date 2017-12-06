@@ -1,6 +1,6 @@
-# apriltag_trackerrr
+# trackerrr
 
-Track AprilTags with an RRR robot manipulator.
+Track tags and other features with an RRR robot manipulator.
 
 # Prerequisites
 
@@ -28,7 +28,7 @@ Track AprilTags with an RRR robot manipulator.
 2. Clone this repo in the `~/tracker_ws/src` folder
    ````
    cd ~/tracker_ws/src
-   git clone git@github.com:christophebedard/apriltag_trackerrr.git
+   git clone https://github.com/christophebedard/trackerrr.git
    ````  
 
 3. Clone the following packages in the `~/tracker_ws/src` folder  

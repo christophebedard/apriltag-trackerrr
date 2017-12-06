@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(apriltag_trackerrr)
+project(trackerrr)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
 add_definitions(-std=c++11)
@@ -118,7 +118,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS message_runtime
-  LIBRARIES apriltag_trackerrr
+  LIBRARIES trackerrr
   CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_geometry image_transport apriltags_ros dynamixel_workbench_msgs
 )
 

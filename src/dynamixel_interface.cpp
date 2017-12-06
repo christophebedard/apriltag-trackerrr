@@ -1,7 +1,7 @@
+#include <string>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Float64.h>
-#include <string>
 #include "dynamixel_workbench_msgs/AX.h"
 #include "dynamixel_workbench_msgs/DynamixelCommand.h"
 

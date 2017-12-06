@@ -1,7 +1,7 @@
 #ifndef TAG_TRACKER_H
 #define TAG_TRACKER_H
 
-#include "apriltags_ros/AprilTagDetectionArray.h"
+#include <vector>
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -13,7 +13,7 @@
 #include <sensor_msgs/JointState.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <vector>
+#include "apriltags_ros/AprilTagDetectionArray.h"
 
 static const double LOOP_RATE = 10.0;
 static const std::string CAMERA_NAMESPACE = "camera";

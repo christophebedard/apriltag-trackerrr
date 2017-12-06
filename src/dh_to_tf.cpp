@@ -1,8 +1,8 @@
+#include <string>
 #include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Float64.h>
 #include <sensor_msgs/JointState.h>
-#include <string>
 
 static const std::string NODE_NAME = "dh_to_tf";
 static const std::string JOINT_STATE_TOPIC = "/motors/present_states";

@@ -12,5 +12,5 @@
     <remap from="/dynamixel/AX_12A/present_position" to="/q1" />
   </include>
 
-  <node pkg="apriltag_trackerrr" name="dynamixel_interface_node" type="dynamixel_interface_node" output="screen" />
+  <node pkg="trackerrr" name="dynamixel_interface_node" type="dynamixel_interface_node" output="screen" />
 </launch>
