@@ -1,6 +1,6 @@
 <launch>
   <arg name="camera" default="camera" />
-  <arg name="device" default="/dev/video1" />
+  <arg name="device" default="/dev/video0" />
 
   <group ns="$(arg camera)">
     <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera">
