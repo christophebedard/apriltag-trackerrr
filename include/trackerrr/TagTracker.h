@@ -29,7 +29,6 @@ static const std::string JOINT_TF_NAME_PREFIX = "/joint";
 static const std::string TAG_TARGET_POSE_TOPIC_NAME_PREFIX = "/target";
 static const std::string TAG_TF_NAME_PREFIX = "/tag_";
 static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states";
-static const int TARGET_TAG_ID = 27;
 
 /** \class TagTracker
  * \brief class which tracks an apriltag.
@@ -76,6 +75,7 @@ class TagTracker
     private:
         ros::NodeHandle n_; /**< node handle */
 
+        int targetTagID_; /**< id of tag to target */
         int dof_; /**< degrees of freedom */
         std::vector<std::string> frames_; /**< vector containing DOF frames */
 

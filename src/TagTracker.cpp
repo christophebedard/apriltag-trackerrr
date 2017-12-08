@@ -12,6 +12,7 @@ TagTracker::TagTracker(ros::NodeHandle& n)
     // get params
     ros::NodeHandle n_p("~");
     n_p.getParam("dof", dof_);
+    n_p.getParam("target_tag_id", targetTagID_);
 
 
     // setup subscribers
@@ -114,14 +115,14 @@ void TagTracker::tagPositionCallback(const apriltags_ros::AprilTagDetectionArray
 
 void TagTracker::update() {
     if (!detected_tags_.empty()) {
-        if (isTagDetected(TARGET_TAG_ID)) {
+        if (isTagDetected(targetTagID_)) {
             // lookup transforms
             std::vector<tf::StampedTransform> transforms;
             try {
                 for (int i = 0; i < dof_; i++) {
                     tf::StampedTransform stf;
-                    tf_listener_.waitForTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), ros::Duration(0.5));
-                    tf_listener_.lookupTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(TARGET_TAG_ID), ros::Time(0), stf);
+                    tf_listener_.waitForTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), ros::Duration(0.5));
+                    tf_listener_.lookupTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), stf);
                     // assuming the transform lookup works is (probably) a bad idea
                     transforms.push_back(stf);
                 }

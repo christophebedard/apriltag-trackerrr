@@ -1,6 +1,7 @@
 <launch>
   <arg name="camera" default="camera" />
   <arg name="dof" default="1" />
+  <arg name="target_tag_id" default="27" />
 
   <!-- camera -->
   <include file="$(find trackerrr)/launch/camera.launch" />
@@ -20,10 +21,11 @@
   </include>
   <!-- -->
 
-  <!-- tracker -->
+  <!-- tag tracker -->
   <group ns="$(arg camera)">
     <node pkg="trackerrr" type="tagtracker_node" name="tagtracker" output="screen">
       <param name="dof" value="$(arg dof)" />
+      <param name="target_tag_id" value="$(arg target_tag_id)" />
     </node>
   </group>
 </launch>
