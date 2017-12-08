@@ -6,9 +6,14 @@
 
 #include "trackerrr/TagTracker.h"
 
-TagTracker::TagTracker(ros::NodeHandle& n, int dof)
-    : n_(n), it_(n), dof_(dof)
+TagTracker::TagTracker(ros::NodeHandle& n)
+    : n_(n), it_(n)
 {
+    // get params
+    ros::NodeHandle n_p("~");
+    n_p.getParam("dof", dof_);
+
+
     // setup subscribers
     image_sub_ = it_.subscribeCamera("/"+CAMERA_NAMESPACE+"/"+IMAGE_RECT_TOPIC_NAME, 100, &TagTracker::imageCallback, this);
     tag_detect_sub_ = n_.subscribe("/"+CAMERA_NAMESPACE+"/"+TAG_DETECTIONS_TOPIC_NAME, 100, &TagTracker::tagPositionCallback, this);

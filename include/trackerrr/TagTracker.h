@@ -45,7 +45,7 @@ class TagTracker
          * \param n : node handle.
          * \param dof : degrees of freedom.
          */
-        TagTracker(ros::NodeHandle& n, int dof);
+        TagTracker(ros::NodeHandle& n);
         
         /**
          * \brief TagTracker destructor.
