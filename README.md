@@ -39,14 +39,26 @@ Track tags and other features with an RRR robot manipulator.
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
    git clone https://github.com/christophebedard/open_manipulator.git
-   git clone https://github.com/RIVeR-Lab/apriltags_ros.git
    ````  
    `camera_umd` (deprecated) is used instead of `libuvc_camera` because of [this](https://github.com/ros-drivers/libuvc_ros/issues/15)
 
-3. Compile
+4. Additionally, clone these to:  
+   1. track AprilTags  
+      ````
+      cd ~/tracker_ws/src
+      git clone https://github.com/RIVeR-Lab/apriltags_ros.git
+      ````
+
+5. Compile
    ````
    cd ~/tracker_ws
    catkin build
+   ````
+
+6. Source  
+   ````
+   cd ~/tracker_ws
+   source devel/setup.bash
    ````
 
 ### Camera calibration
