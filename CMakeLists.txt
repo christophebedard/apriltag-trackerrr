@@ -152,6 +152,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(tagtracker_node
+  src/Tracker.cpp
     src/TagTracker_node.cpp src/TagTracker.cpp)
 add_executable(dh_to_tf
     src/dh_to_tf.cpp)

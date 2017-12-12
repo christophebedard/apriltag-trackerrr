@@ -1,5 +1,10 @@
-#include "trackerrr/TagTracker.h"
+/**
+ * \file TagTracker_node.cpp
+ * \brief TagTracker node
+ * \author christophebedard
+ */
 
+#include "trackerrr/TagTracker.h"
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "tagtracker");
