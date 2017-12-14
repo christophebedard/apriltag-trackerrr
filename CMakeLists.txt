@@ -48,8 +48,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+  include ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ executable
