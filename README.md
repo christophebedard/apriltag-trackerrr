@@ -55,6 +55,12 @@ Track tags and other features with an RRR robot manipulator.
    catkin build
    ````
 
+   To get better performance, compile a release build  
+   ````
+   cd ~/tracker_ws
+   catkin build -DCMAKE_BUILD_TYPE=Release
+   ````
+
 6. Source  
    ````
    cd ~/tracker_ws
