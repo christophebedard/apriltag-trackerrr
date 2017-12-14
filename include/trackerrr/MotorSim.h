@@ -65,6 +65,20 @@ class MotorSim
         double vel_; /**< current angular velocity */
         BoundedPID* pid_vel_; /**< PID */
 
+        /**
+         * \brief Update position.
+         *
+         * \param dt : elapsed time since last update.
+         */
+        void updatePosition(ros::Duration dt);
+
+        /**
+         * \brief Update velocity.
+         *
+         * \param dt : elapsed time since last update.
+         */
+        void updateVel(ros::Duration dt);
+
 };
 
 #endif // MOTORSIM_H

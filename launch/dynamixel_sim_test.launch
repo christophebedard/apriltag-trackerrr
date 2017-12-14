@@ -1,0 +1,30 @@
+<launch>
+    <arg name="dof" default="1" />
+
+    <!-- viz of current robot joint states -->
+    <include file="$(find trackerrr)/launch/viz_robot.launch">
+        <arg name="dof" value="$(arg dof)" />
+    </include>
+
+    <!-- dynamixel sim -->
+    <node pkg="trackerrr" type="dynamixelsim_node" name="dynamixelsim" output="screen">
+        <param name="dof" value="$(arg dof)" />
+        <param name="present_jointstate_topic" value="/motors/present_states" />
+        <param name="goal_jointstate_topic" value="/motors/goal_states" />
+        <param name="p" value="2.0" />
+        <param name="i" value="0.5" />
+        <param name="d" value="0.1" />
+        <param name="vel_max" value="1.5708" />
+    </node>
+
+    <!-- tag tracker ->
+    <group ns="$(arg camera)">
+        <node pkg="trackerrr" type="tagtracker_node" name="tagtracker" output="screen">
+            <param name="dof" value="$(arg dof)" />
+            <param name="target_tag_id" value="$(arg target_tag_id)" />
+        </node>
+    </group>
+    -->
+
+    <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
+</launch>

@@ -11,7 +11,7 @@ MotorSim::MotorSim(double posMin, double posMax, double posInit, double p, doubl
       posMax_(posMax),
       posInit_(posInit),
       posCurrent_(posInit),
-      posSetpoint_(posInit),
+      posSetpoint_(posInit)
 {
     // setup PID
     pid_vel_ = new BoundedPID(-velMax, velMax, p, i, d, 0.0, -0.0, false);
@@ -54,7 +54,7 @@ void MotorSim::updateVel(ros::Duration dt) {
     vel_ = pid_vel_->computeCommand(posSetpoint_ - posCurrent_, dt);
 }
 
-void Quad::update(ros::Duration dt) {
+void MotorSim::update(ros::Duration dt) {
     updateVel(dt);
     updatePosition(dt);
 }

@@ -67,6 +67,16 @@ target_link_libraries(dynamixel_interface_node
     ${catkin_LIBRARIES}
 )
 
+add_executable(dynamixelsim_node
+    src/DinamixelSim_node.cpp
+    src/DynamixelSim.cpp
+    src/MotorSim.cpp
+    src/BoundedPID.cpp
+)
+target_link_libraries(dynamixelsim_node
+  ${catkin_LIBRARIES}
+)
+
 # apriltag tracking
 find_package(apriltags_ros)
 if(apriltags_ros_FOUND)
