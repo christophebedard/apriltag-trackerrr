@@ -35,7 +35,19 @@ double MotorSim::getPosition() {
  *===========================*/
 
 void MotorSim::updatePosition(ros::Duration dt) {
-    posCurrent_ += vel_ * dt.toSec();
+    // get next position
+    double nextPos = posCurrent_ + (vel_ * dt.toSec());
+
+    // check position validity
+    if (nextPos < posMin_) {
+        // below minimum, set to minimum
+        posCurrent_ = posMin_;
+    } else if (nextPos > posMax_) {
+        // above maximum, set to maximum
+        posCurrent_ = posMax_;
+    } else {
+        posCurrent_ = nextPos;
+    }
 }
 
 void MotorSim::updateVel(ros::Duration dt) {
