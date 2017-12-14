@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_srvs
   message_generation
   sensor_msgs
+  control_toolbox
   uvc_camera
   jpeg_streamer
   cv_bridge
@@ -38,7 +39,7 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS message_runtime
   LIBRARIES trackerrr
-  CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs uvc_camera jpeg_streamer cv_bridge image_geometry image_transport dynamixel_workbench_msgs
+  CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs control_toolbox uvc_camera jpeg_streamer cv_bridge image_geometry image_transport dynamixel_workbench_msgs
 )
 
 ###########
