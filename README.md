@@ -48,6 +48,13 @@ Track tags and other features with an RRR robot manipulator.
       cd ~/tracker_ws/src
       git clone https://github.com/RIVeR-Lab/apriltags_ros.git
       ````
+   
+   2. track objects with YOLO  
+      ````
+      cd ~/tracker_ws/src
+      git clone https://github.com/leggedrobotics/darknet_ros.git
+      ````  
+      Follow instructions [here](https://github.com/leggedrobotics/darknet_ros).
 
 5. Compile
    ````
