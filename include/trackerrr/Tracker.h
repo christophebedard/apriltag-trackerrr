@@ -12,6 +12,7 @@
 #include <std_msgs/Float64.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <tf/transform_listener.h>
+#include <tf/transform_broadcaster.h>
 #include <image_transport/image_transport.h>
 #include <image_geometry/pinhole_camera_model.h>
 #include <cv_bridge/cv_bridge.h>

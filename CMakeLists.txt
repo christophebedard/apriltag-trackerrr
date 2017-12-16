@@ -98,3 +98,26 @@ if(apriltags_ros_FOUND)
 else()
     message(WARNING "apriltags_ros NOT found: will not build tagtracker_node")
 endif()
+
+# YOLO tracking
+find_package(darknet_ros)
+if(darknet_ros_FOUND)
+    message("darknet_ros found for yolotracker_node")
+    add_executable(yolotracker_node
+  src/YoloTracker.cpp
+        src/YoloTracker_node.cpp
+        src/YoloTracker.cpp
+        src/Tracker.cpp
+    )
+    include_directories(
+        include
+        ${darknet_ros_INCLUDE_DIRS}
+    )
+    target_link_libraries(yolotracker_node
+        ${darknet_ros_INCLUDE_DIRS}
+        ${darknet_ros_LIBRARIES}
+        ${catkin_LIBRARIES}
+    )
+else()
+    message(WARNING "darknet_ros NOT found: will not build yolotracker_node")
+endif()

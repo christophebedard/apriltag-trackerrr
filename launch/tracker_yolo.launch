@@ -1,0 +1,38 @@
+<launch>
+  <arg name="dof" default="1" />
+  <arg name="target_object" default="syvess" />
+  <arg name="camera" default="camera" />
+  <arg name="device" default="/dev/video0" />
+
+  <!-- image acquisition from camera -->
+  <include file="$(find trackerrr)/launch/camera.launch" >
+      <arg name="camera" value="$(arg camera)" />
+      <arg name="device" value="$(arg device)" />
+  </include>
+
+  <!-- object detection from camera images -->
+  <include file="$(find darknet_ros)/launch/darknet_ros.launch" />
+
+  <!-- dynamixel motor controller -->
+  <!-- -->
+  <include file="$(find trackerrr)/launch/dynamixel_controller.launch">
+      <arg name="max_dxl_num" value="$(arg dof)" />
+  </include>
+  <!-- -->
+
+  <!-- viz of current robot joint states -->
+  <include file="$(find trackerrr)/launch/viz_robot.launch">
+    <arg name="dof" value="$(arg dof)" />
+  </include>
+
+  <!-- tag tracker -->
+  <group ns="$(arg camera)">
+    <node pkg="trackerrr" type="yolotracker_node" name="yolotracker" output="screen">
+      <param name="dof" value="$(arg dof)" />
+      <param name="target_object" value="$(arg target_object)" />
+      <param name="detection_topic" value="/darknet_ros/bounding_boxes" />
+      <param name="found_objects_topic" value="/darknet_ros/found_object" />
+      <param name="image_topic" value="/$(arg camera)/image_rect" />
+    </node>
+  </group>
+</launch>

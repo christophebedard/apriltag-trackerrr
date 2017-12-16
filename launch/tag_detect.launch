@@ -19,7 +19,6 @@
     </node>
   </group>
 
-  <!-- launch rqt_image_view and rviz -->
+  <!-- launch rqt_image_view -->
   <node pkg="rqt_image_view" type="rqt_image_view" name="image_view" args="/$(arg camera)/tag_detections_image" />
-  <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
 </launch>

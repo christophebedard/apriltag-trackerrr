@@ -8,4 +8,6 @@
   <node pkg="trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
     <param name="dof" type="int" value="$(arg dof)" />
   </node>
+
+  <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
 </launch>
