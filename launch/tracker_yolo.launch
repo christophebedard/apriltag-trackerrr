@@ -29,8 +29,6 @@
     <node pkg="trackerrr" type="yolotracker_node" name="yolotracker" output="screen">
         <param name="dof" value="$(arg dof)" />
         <param name="target_object" value="$(arg target_object)" />
-        <param name="detection_topic" value="/darknet_ros/bounding_boxes" />
-        <param name="found_objects_topic" value="/darknet_ros/found_object" />
         <param name="image_topic" value="/$(arg camera)/image_rect" />
         <param name="camera" value="$(arg camera)" />
     </node>

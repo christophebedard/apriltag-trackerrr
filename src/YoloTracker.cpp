@@ -12,8 +12,8 @@ YoloTracker::YoloTracker(ros::NodeHandle& n)
     // get params
     ros::NodeHandle n_p("~");
     n_p.getParam("target_object", targetObject_);
-    n_p.getParam("detection_topic", objectDetectionTopic_);
-    n_p.getParam("found_objects_topic", objectFoundTopic_);
+    n_p.getParam("/darknet_ros/publishers/bounding_boxes/topic", objectDetectionTopic_);
+    n_p.getParam("/darknet_ros/publishers/object_detector/topic", objectFoundTopic_);
     n_p.getParam("image_topic", imageTopic_);
 
     // setup subscribers
