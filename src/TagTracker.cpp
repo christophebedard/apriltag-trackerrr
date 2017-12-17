@@ -28,7 +28,11 @@ TagTracker::~TagTracker() {
  * Utilities
  *===========================*/
 
-bool TagTracker::isTagDetected(int tag_id) {
+bool TagTracker::isTargetDetected() const {
+    return isTagDetected(targetTagID_);
+}
+
+bool TagTracker::isTagDetected(int tag_id) const {
     for (apriltags_ros::AprilTagDetection tag : detected_tags_) {
         if (tag.id == tag_id) { return true; }
     }
@@ -81,31 +85,17 @@ void TagTracker::tagPositionCallback(const apriltags_ros::AprilTagDetectionArray
  *===========================*/
 
 void TagTracker::update() {
-    // first clear command angles
-    Tracker::clearCommandAngles();
-
-    // check detections
     if (isTagDetected(targetTagID_)) {
-        // lookup transforms
-        std::vector<tf::StampedTransform> transforms;
         try {
-            for (int i = 0; i < dof_; i++) {
-                tf::StampedTransform stf;
-                tf_listener_.waitForTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), ros::Duration(0.5));
-                tf_listener_.lookupTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), stf);
-                // assuming the transform lookup works is (probably) a bad idea
-                transforms.push_back(stf);
-            }
+            // lookup target tag transform (with ID)
+            tf::StampedTransform stf;
+            tf_listener_.waitForTransform("/camera", TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), ros::Duration(0.5));
+            tf_listener_.lookupTransform("/camera", TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), stf);
+            // re-broadcast (for base class)
+            tf_br_.sendTransform(tf::StampedTransform(tf::Transform(stf.getRotation(), stf.getOrigin()), ros::Time::now(), "/camera", TARGET_TF_NAME));
         } catch (tf::TransformException ex) {
             ROS_ERROR("Error looking up tag transform: %s", ex.what());
         }
-
-        // calculate angles
-        for (int i = 0; i < dof_; i++) {
-            angles_.push_back(atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x()));
-        }
-    } else {
-        // empty; didn't find tag
     }
 
     Tracker::update();

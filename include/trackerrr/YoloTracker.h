@@ -51,6 +51,14 @@ class YoloTracker : public Tracker
          */
         void spinOnce();
 
+        /*===========================
+         * Utilities
+         *===========================*/
+        /**
+         * \brief Check if target is currently detected.
+         */
+        bool isTargetDetected() const;
+
 
     private:
         std::string targetObject_; /**< name of target object */
@@ -113,7 +121,7 @@ class YoloTracker : public Tracker
          *
          * \return detection result.
          */
-        bool isObjectDetected(std::string object);
+        bool isObjectDetected(std::string object) const;
 
 };
 

@@ -22,13 +22,14 @@
 #include <opencv2/highgui/highgui.hpp>
 
 static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states"; /**< topic for position commands */
-static const std::string TARGET_POSE_TOPIC_NAME_PREFIX = "/target"; /**< topic prefix for position commands pose */
+static const std::string TARGET_POSE_TOPIC_NAME_PREFIX = "/target_q"; /**< topic prefix for position commands pose */
 static const std::string JOINT_TF_NAME_PREFIX = "/joint"; /**< topic name prefix for joint position */
+static const std::string TARGET_TF_NAME = "/target"; /**< tf name for target (which derived class will broadcast) */
 
 /** \class Tracker
  * \brief abstract class for tracking.
  *
- * Expects a derived class to update the angles_ vector with joint position commands.
+ * Expects a derived class to publish /target tf, then it updates the angles_ vector with joint position commands.
  */
 class Tracker
 {
@@ -57,6 +58,7 @@ class Tracker
         std::vector<std::string> frames_; /**< vector containing DOF frames */
         std::vector<double> angles_; /**< vector containing target angles for next command */
 
+        tf::TransformListener tf_listener_; /**< tf listener */
         
         /*===========================
          * Update
@@ -71,10 +73,13 @@ class Tracker
          */
         virtual void spinOnce() =0;
 
+        /*===========================
+         * Utilities
+         *===========================*/
         /**
-         * \brief Clears command angles from vector.
+         * \brief Check if target is currently detected.
          */
-        void clearCommandAngles();
+        virtual bool isTargetDetected() const =0;
     
     private:
         /*===========================
@@ -86,6 +91,11 @@ class Tracker
         /*===========================
          * Utilities
          *===========================*/
+        /**
+         * \brief Clears command angles from vector.
+         */
+        void clearCommandAngles();
+        
         /**
          * \brief Create PoseStamped messages from angles and frames.
          *

@@ -63,8 +63,27 @@ void Tracker::publishTargetPoses(const std::vector<geometry_msgs::PoseStamped>& 
  *===========================*/
 
 void Tracker::update() {
-    // publish results, if there are any
-    if (!angles_.empty()) {
+    if (isTargetDetected()) {
+        // lookup transforms
+        std::vector<tf::StampedTransform> transforms;
+        try {
+            for (int i = 0; i < dof_; i++) {
+                tf::StampedTransform stf;
+                tf_listener_.waitForTransform(frames_[i], TARGET_TF_NAME, ros::Time(0), ros::Duration(0.5));
+                tf_listener_.lookupTransform(frames_[i], TARGET_TF_NAME, ros::Time(0), stf);
+                // assuming the transform lookup works is (probably) a bad idea
+                transforms.push_back(stf);
+            }
+        } catch (tf::TransformException ex) {
+            ROS_ERROR("Error looking up tag transform: %s", ex.what());
+        }
+
+        // calculate angles
+        for (int i = 0; i < dof_; i++) {
+            angles_[i] = atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x());
+        }
+
+        // publish
         joint_state_command_pub_.publish(createJointStateFromAngles(angles_));
         publishTargetPoses(createPoseStampedVectorFromAngles(angles_));
     }

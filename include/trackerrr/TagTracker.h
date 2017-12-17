@@ -10,7 +10,7 @@
 #include "trackerrr/Tracker.h"
 #include "apriltags_ros/AprilTagDetectionArray.h"
 
-static const double LOOP_RATE = 10.0;
+static const double LOOP_RATE = 20.0;
 static const std::string CAMERA_NAMESPACE = "camera"; /**< namespace for camera */
 static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect"; /**< topic name for image rect */
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections"; /**< topic name for tag detections message */
@@ -56,6 +56,14 @@ class TagTracker : public Tracker
          */
         void spinOnce();
 
+        /*===========================
+         * Utilities
+         *===========================*/
+        /**
+         * \brief Check if target is currently detected.
+         */
+        bool isTargetDetected() const;
+
 
     private:
         int targetTagID_; /**< id of tag to target */
@@ -70,12 +78,12 @@ class TagTracker : public Tracker
          *===========================*/
         image_transport::CameraSubscriber image_sub_; /**< camera image subscriber */
         ros::Subscriber tag_detect_sub_; /**< Apriltag detection subscriber */
-        tf::TransformListener tf_listener_; /**< tf listener */
 
         /*===========================
          * Publishers
          *===========================*/
         image_transport::Publisher track_image_pub_; /**< publisher for image with tracking error info */
+        tf::TransformBroadcaster tf_br_; /**< tf broadcaster */
 
         /*===========================
          * Callbacks
@@ -105,7 +113,7 @@ class TagTracker : public Tracker
          *
          * \return detection result.
          */
-        bool isTagDetected(int tag_id);
+        bool isTagDetected(int tag_id) const;
 
 };
 

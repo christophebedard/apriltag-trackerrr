@@ -35,7 +35,11 @@ YoloTracker::~YoloTracker() {
  * Utilities
  *===========================*/
 
-bool YoloTracker::isObjectDetected(std::string object) {
+bool YoloTracker::isTargetDetected() const {
+    return isObjectDetected(targetObject_);
+}
+
+bool YoloTracker::isObjectDetected(std::string object) const {
     if (objectsFound_ > (int8_t)0) {
         for (darknet_ros_msgs::BoundingBox box : detectedObjects_) {
             if (box.Class == object) { return true; }
@@ -95,9 +99,6 @@ void YoloTracker::objectFoundCallback(const std_msgs::Int8::ConstPtr& msg) {
  *===========================*/
 
 void YoloTracker::update() {
-    // first clear command angles
-    Tracker::clearCommandAngles();
-
     // check detections
     if (isObjectDetected(targetObject_)) {
         // compute 3d position of object wrt camera
@@ -118,12 +119,13 @@ void YoloTracker::update() {
         } catch (tf::TransformException ex) {
             ROS_ERROR("Error looking up tag transform: %s", ex.what());
         }
-        */
+        
 
         // calculate angles
         for (int i = 0; i < dof_; i++) {
             angles_.push_back(atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x()));
         }
+        */
     } else {
         // empty; didn't find tag
     }
