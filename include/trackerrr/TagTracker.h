@@ -83,7 +83,6 @@ class TagTracker : public Tracker
          * Publishers
          *===========================*/
         image_transport::Publisher track_image_pub_; /**< publisher for image with tracking error info */
-        tf::TransformBroadcaster tf_br_; /**< tf broadcaster */
 
         /*===========================
          * Callbacks

@@ -48,6 +48,16 @@ bool YoloTracker::isObjectDetected(std::string object) const {
     return false;
 }
 
+cv::Point2d YoloTracker::getObjectPosition2d(std::string object) {
+    for (darknet_ros_msgs::BoundingBox box : detectedObjects_) {
+        if (box.Class == object) {
+            cv::Point2d pos((box.xmax + box.xmin)/2.0,
+                            (box.ymax + box.ymin)/2.0);
+            return pos;
+        }
+    }
+}
+
 /*===========================
  * Callbacks
  *===========================*/
@@ -57,7 +67,6 @@ void YoloTracker::imageCallback(const sensor_msgs::ImageConstPtr& msg, const sen
     cam_model_.fromCameraInfo(cam_info);
     
     // debug drawing
-    /*
     // convert image to opencv image type
     cv_bridge::CvImagePtr cv_ptr;
     try
@@ -74,15 +83,13 @@ void YoloTracker::imageCallback(const sensor_msgs::ImageConstPtr& msg, const sen
         int middle_y = cv_ptr->image.rows / 2;
         cv::Point2d middle(middle_x, middle_y);
         for (darknet_ros_msgs::BoundingBox box : detectedObjects_) {
-            double x = (box.xmax + box.xmin)/2.0;
-            double y = (box.ymax + box.ymin)/2.0;
-            cv::Point2d uv(x, y);
+            cv::Point2d uv((box.xmax + box.xmin)/2.0,
+                            (box.ymax + box.ymin)/2.0);
             cv::arrowedLine(cv_ptr->image, middle, uv, CV_RGB(255,0,0));
         }
     }
     // output modified video stream
     trackImage_pub_.publish(cv_ptr->toImageMsg());
-    */
 }
 
 void YoloTracker::objectCallback(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg) {
@@ -102,32 +109,15 @@ void YoloTracker::update() {
     // check detections
     if (isObjectDetected(targetObject_)) {
         // compute 3d position of object wrt camera
-
+        cv::Point3d pos3d = cam_model_.projectPixelTo3dRay(getObjectPosition2d(targetObject_));
         // broadcast corresponding tf
-
-        // lookup transforms for each frame
-        /*
-        std::vector<tf::StampedTransform> transforms;
-        try {
-            for (int i = 0; i < dof_; i++) {
-                tf::StampedTransform stf;
-                tf_listener_.waitForTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), ros::Duration(0.5));
-                tf_listener_.lookupTransform(frames_[i], TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), stf);
-                // assuming the transform lookup works is (probably) a bad idea
-                transforms.push_back(stf);
-            }
-        } catch (tf::TransformException ex) {
-            ROS_ERROR("Error looking up tag transform: %s", ex.what());
-        }
-        
-
-        // calculate angles
-        for (int i = 0; i < dof_; i++) {
-            angles_.push_back(atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x()));
-        }
-        */
-    } else {
-        // empty; didn't find tag
+        tf::Transform tf;
+        tf::Quaternion q;
+        tf.setOrigin(tf::Vector3(pos3d.x, pos3d.y, pos3d.z));
+        ROS_INFO_STREAM("x = " + std::to_string(pos3d.x) + ", y = "+std::to_string(pos3d.y) + ", z = "+std::to_string(pos3d.z));
+        q.setRPY(0.0, 0.0, 0.0);
+        tf.setRotation(q);
+        tf_br_.sendTransform(tf::StampedTransform(tf, ros::Time::now(), "/camera", TARGET_TF_NAME));
     }
 
     Tracker::update();

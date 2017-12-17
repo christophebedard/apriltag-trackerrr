@@ -59,6 +59,7 @@ class Tracker
         std::vector<double> angles_; /**< vector containing target angles for next command */
 
         tf::TransformListener tf_listener_; /**< tf listener */
+        tf::TransformBroadcaster tf_br_; /**< tf broadcaster */
         
         /*===========================
          * Update

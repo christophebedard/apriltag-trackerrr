@@ -20,6 +20,7 @@ Tracker::Tracker(ros::NodeHandle& n)
     for (int i = 0; i < dof_; i++) {
         target_pose_pubs_.push_back(n.advertise<geometry_msgs::PoseStamped>(TARGET_POSE_TOPIC_NAME_PREFIX + std::to_string(i+1), 10));
         frames_.push_back(JOINT_TF_NAME_PREFIX + std::to_string(i));
+        angles_.push_back(0.0);
     }
 }
 
@@ -74,18 +75,18 @@ void Tracker::update() {
                 // assuming the transform lookup works is (probably) a bad idea
                 transforms.push_back(stf);
             }
+
+            // calculate angles
+            for (int i = 0; i < dof_; i++) {
+                angles_[i] = atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x());
+            }
+
+            // publish
+            joint_state_command_pub_.publish(createJointStateFromAngles(angles_));
+            publishTargetPoses(createPoseStampedVectorFromAngles(angles_));
         } catch (tf::TransformException ex) {
             ROS_ERROR("Error looking up tag transform: %s", ex.what());
         }
-
-        // calculate angles
-        for (int i = 0; i < dof_; i++) {
-            angles_[i] = atan2(transforms[i].getOrigin().y(), transforms[i].getOrigin().x());
-        }
-
-        // publish
-        joint_state_command_pub_.publish(createJointStateFromAngles(angles_));
-        publishTargetPoses(createPoseStampedVectorFromAngles(angles_));
     }
 }
 

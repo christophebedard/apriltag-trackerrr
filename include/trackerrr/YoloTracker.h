@@ -123,6 +123,15 @@ class YoloTracker : public Tracker
          */
         bool isObjectDetected(std::string object) const;
 
+        /**
+         * \brief Get 2D position of object in image.
+         *
+         * \param object : name of object to look for.
+         *
+         * \return position.
+         */
+        cv::Point2d getObjectPosition2d(std::string object);
+
 };
 
 #endif  // TRACKERRR_YOLO_TRACKER_H

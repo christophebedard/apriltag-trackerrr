@@ -104,7 +104,6 @@ find_package(darknet_ros)
 if(darknet_ros_FOUND)
     message("darknet_ros found for yolotracker_node")
     add_executable(yolotracker_node
-  src/YoloTracker.cpp
         src/YoloTracker_node.cpp
         src/YoloTracker.cpp
         src/Tracker.cpp
