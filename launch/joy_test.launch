@@ -1,0 +1,37 @@
+<launch>
+    <arg name="dof" default="2" />
+    <arg name="joy_dev" default="/dev/input/js0" />
+    <arg name="joy_config" default="xbox360" />
+    <arg name="teleop_config" default="$(find trackerrr)/cfg/$(arg joy_config).yaml" />
+
+    <!-- joy stuff -->
+    <rosparam file="$(arg teleop_config)" command="load" />
+    <node pkg="joy" type="joy_node" name="joy_node">
+        <param name="dev" value="$(arg joy_dev)" />
+        <param name="deadzone" value="0.2" />
+        <param name="autorepeat_rate" value="20" />
+    </node>
+    <node pkg="joy_teleop" type="joy_teleop.py" name="joy_teleop" />
+
+    <!-- motor joy -->
+    <node pkg="trackerrr" type="motorjoy_node" name="motorjoy_node" output="screen">
+        <param name="dof" value="$(arg dof)" />
+        <param name="goal_jointstate_topic" value="/motors/goal_states" />
+    </node>
+
+    <!-- dynamixel motor controller -->
+    <include file="$(find trackerrr)/launch/dynamixel_controller.launch">
+        <arg name="max_dxl_num" value="$(arg dof)" />
+    </include>
+
+    <!-- viz of current robot joint states -->
+    <include file="$(find trackerrr)/launch/viz_robot.launch">
+        <arg name="dof" value="$(arg dof)" />
+    </include>
+
+    <!-- camera -->
+    <include file="$(find trackerrr)/launch/camera.launch" >
+        <arg name="device" value="/dev/video0" />
+    </include>
+    <node pkg="rqt_image_view" type="rqt_image_view" name="rqt_image_view" args="/camera/image_rect_color" />
+</launch>

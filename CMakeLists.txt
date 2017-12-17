@@ -77,6 +77,13 @@ target_link_libraries(dynamixelsim_node
   ${catkin_LIBRARIES}
 )
 
+add_executable(motorjoy_node
+    src/MotorJoy.cpp
+)
+target_link_libraries(motorjoy_node
+    ${catkin_LIBRARIES}
+)
+
 # apriltag tracking
 find_package(apriltags_ros)
 if(apriltags_ros_FOUND)
