@@ -12,6 +12,7 @@ Tracker::Tracker(ros::NodeHandle& n)
     // get params
     ros::NodeHandle n_p("~");
     n_p.getParam("dof", dof_);
+    n_p.getParam("camera", cameraName_);
 
     // setup publishers
     joint_state_command_pub_ = n.advertise<sensor_msgs::JointState>(JOINT_STATE_COMMAND_TOPIC_NAME, 100);

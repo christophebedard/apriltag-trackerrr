@@ -31,5 +31,6 @@
     <node pkg="trackerrr" type="tagtracker_node" name="tagtracker" output="screen">
         <param name="dof" value="$(arg dof)" />
         <param name="target_tag_id" value="$(arg target_tag_id)" />
+        <param name="camera" value="$(arg camera)" />
     </node>
 </launch>

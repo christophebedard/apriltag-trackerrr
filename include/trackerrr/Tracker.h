@@ -58,6 +58,8 @@ class Tracker
         std::vector<std::string> frames_; /**< vector containing DOF frames */
         std::vector<double> angles_; /**< vector containing target angles for next command */
 
+        std::string cameraName_; /**< camera name (used as namespace and tf name) */
+
         tf::TransformListener tf_listener_; /**< tf listener */
         tf::TransformBroadcaster tf_br_; /**< tf broadcaster */
         

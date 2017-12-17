@@ -11,8 +11,6 @@
 #include "apriltags_ros/AprilTagDetectionArray.h"
 
 static const double LOOP_RATE = 20.0;
-static const std::string CAMERA_NAMESPACE = "camera"; /**< namespace for camera */
-static const std::string IMAGE_RECT_TOPIC_NAME = "image_rect"; /**< topic name for image rect */
 static const std::string TAG_DETECTIONS_TOPIC_NAME = "tag_detections"; /**< topic name for tag detections message */
 static const std::string TAG_TF_NAME_PREFIX = "/tag_"; /**< tf name prefix for tags */
 
@@ -76,25 +74,11 @@ class TagTracker : public Tracker
         /*===========================
          * Subscribers
          *===========================*/
-        image_transport::CameraSubscriber image_sub_; /**< camera image subscriber */
         ros::Subscriber tag_detect_sub_; /**< Apriltag detection subscriber */
-
-        /*===========================
-         * Publishers
-         *===========================*/
-        image_transport::Publisher track_image_pub_; /**< publisher for image with tracking error info */
 
         /*===========================
          * Callbacks
          *===========================*/
-        /**
-         * \brief Callback class method for camera image.
-         *
-         * \param msg : constptr to image message.
-         * \param cam_info : constptr to camera info message.
-         */
-        void imageCallback(const sensor_msgs::ImageConstPtr& msg, const sensor_msgs::CameraInfoConstPtr& cam_info);
-
         /**
          * \brief Callback class method for apriltag detection.
          *

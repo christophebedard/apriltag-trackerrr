@@ -81,12 +81,6 @@ class YoloTracker : public Tracker
         tf::TransformListener tf_listener_; /**< tf listener */
 
         /*===========================
-         * Publishers
-         *===========================*/
-        tf::TransformBroadcaster tf_br_; /**< pose tf publisher */
-        image_transport::Publisher trackImage_pub_; /**< publisher for image with tracking error info */
-
-        /*===========================
          * Callbacks
          *===========================*/
         /**
