@@ -27,6 +27,7 @@ MotorJoy::MotorJoy(ros::NodeHandle& n)
     // init
     for (int i = 0; i < dof_; i++) {
         posCurrent_.push_back(0.0);
+        nextGoalState_.push_back(0.0);
         vel_.push_back(0.0);
     }
 }
@@ -70,7 +71,7 @@ void MotorJoy::updatePosition() {
             nextGoalState_[0] = posCurrent_[0] + (vel_[0] * rate_.expectedCycleTime().toSec());
             break;
         default:
-            posCurrent_[0] = 0.0;
+            nextGoalState_[0] = 0.0;
             break;
     }
 
@@ -91,7 +92,7 @@ void MotorJoy::updatePosition() {
 
 void MotorJoy::publishGoalJointState() {
     sensor_msgs::JointState state_msg;
-    state_msg.position = posCurrent_;
+    state_msg.position = nextGoalState_;
     presentJointState_pub_.publish(state_msg);
 }
 
