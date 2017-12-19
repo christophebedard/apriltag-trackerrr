@@ -1,0 +1,23 @@
+<launch>
+    <arg name="dof" default="2" />
+    <arg name="goal_jointstate_topic" default="/motors/goal_states" />
+    
+    <arg name="joy_dev" default="/dev/input/js0" />
+    <arg name="joy_config" default="xbox360" />
+    <arg name="teleop_config" default="$(find trackerrr)/cfg/$(arg joy_config).yaml" />
+
+    <!-- ros joy stuff -->
+    <rosparam file="$(arg teleop_config)" command="load" />
+    <node pkg="joy" type="joy_node" name="joy_node">
+        <param name="dev" value="$(arg joy_dev)" />
+        <param name="deadzone" value="0.2" />
+        <param name="autorepeat_rate" value="20" />
+    </node>
+    <node pkg="joy_teleop" type="joy_teleop.py" name="joy_teleop" />
+
+    <!-- motor joy -->
+    <node pkg="trackerrr" type="motorjoy_node" name="motorjoy_node" output="screen">
+        <param name="dof" value="$(arg dof)" />
+        <param name="goal_jointstate_topic" value="$(arg goal_jointstate_topic)" />
+    </node>
+</launch>
