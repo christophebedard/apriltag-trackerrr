@@ -68,6 +68,13 @@ class MotorJoy
          * \param msg : constptr to Twist message.
          */
         void velCallback(const geometry_msgs::Twist::ConstPtr& msg);
+
+        /**
+         * \brief Callback class method for current JointState message.
+         *
+         * \param msg : constptr to JointState message.
+         */
+        void jointstateCallback(const sensor_msgs::JointState::ConstPtr& msg);
         
         /*===========================
          * Update
