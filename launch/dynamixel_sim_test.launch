@@ -1,5 +1,7 @@
 <launch>
     <arg name="dof" default="1" />
+    <arg name="present_jointstate_topic" default="/motors/present_states" />
+    <arg name="goal_jointstate_topic" default="/motors/goal_states" />
 
     <!-- viz of current robot joint states -->
     <include file="$(find trackerrr)/launch/viz_robot.launch">
@@ -9,8 +11,8 @@
     <!-- dynamixel sim -->
     <node pkg="trackerrr" type="dynamixelsim_node" name="dynamixelsim" output="screen">
         <param name="dof" value="$(arg dof)" />
-        <param name="present_jointstate_topic" value="/motors/present_states" />
-        <param name="goal_jointstate_topic" value="/motors/goal_states" />
+        <param name="present_jointstate_topic" value="$(arg present_jointstate_topic)" />
+        <param name="goal_jointstate_topic" value="$(arg goal_jointstate_topic)" />
         <param name="p" value="2.0" />
         <param name="i" value="0.5" />
         <param name="d" value="0.1" />

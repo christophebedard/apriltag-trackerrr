@@ -1,18 +1,21 @@
 <launch>
-  <arg name="device_name" default="/dev/ttyUSB0" />
-  <arg name="baud_rate" default="1000000" />
-  <arg name="protocol_version" default="1.0" />
-  <arg name="max_dxl_num" default="1" />
-  <arg name="output" default="log" />
+    <arg name="present_jointstate_topic" default="/motors/present_states" />
+    <arg name="goal_jointstate_topic" default="/motors/goal_states" />
 
-  <remap from="/robotis/dynamixel/present_states" to="/motors/present_states" />
-  <remap from="/robotis/dynamixel/goal_states" to="/motors/goal_states" />
+    <arg name="device_name" default="/dev/ttyUSB0" />
+    <arg name="baud_rate" default="1000000" />
+    <arg name="protocol_version" default="1.0" />
+    <arg name="max_dxl_num" default="1" />
+    <arg name="output" default="log" />
+    
+    <remap from="/robotis/dynamixel/present_states" to="$(arg present_jointstate_topic)" />
+    <remap from="/robotis/dynamixel/goal_states" to="$(arg goal_jointstate_topic)" />
 
-  <include file="$(find open_manipulator_dynamixel_ctrl)/launch/dynamixel_controller.launch">
-    <arg name="baud_rate" value="$(arg baud_rate)" />
-    <arg name="device_name" value="$(arg device_name)" />
-    <arg name="protocol_version" value="$(arg protocol_version)" />
-    <arg name="max_dxl_num" value="$(arg max_dxl_num)" />
-    <arg name="output" value="$(arg output)" />
-  </include>
+    <include file="$(find open_manipulator_dynamixel_ctrl)/launch/dynamixel_controller.launch">
+        <arg name="baud_rate" value="$(arg baud_rate)" />
+        <arg name="device_name" value="$(arg device_name)" />
+        <arg name="protocol_version" value="$(arg protocol_version)" />
+        <arg name="max_dxl_num" value="$(arg max_dxl_num)" />
+        <arg name="output" value="$(arg output)" />
+    </include>
 </launch>
