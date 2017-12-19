@@ -1,7 +1,7 @@
 <launch>
-    <arg name="dof" default="2" />
+    <arg name="dof" default="1" />
     <arg name="goal_jointstate_topic" default="/motors/goal_states" />
-    
+
     <arg name="joy_dev" default="/dev/input/js0" />
     <arg name="joy_config" default="xbox360" />
     <arg name="teleop_config" default="$(find trackerrr)/cfg/$(arg joy_config).yaml" />

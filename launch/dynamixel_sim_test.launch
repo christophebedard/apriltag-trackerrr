@@ -19,14 +19,5 @@
         <param name="vel_max" value="1.5708" />
     </node>
 
-    <!-- tag tracker ->
-    <group ns="$(arg camera)">
-        <node pkg="trackerrr" type="tagtracker_node" name="tagtracker" output="screen">
-            <param name="dof" value="$(arg dof)" />
-            <param name="target_tag_id" value="$(arg target_tag_id)" />
-        </node>
-    </group>
-    -->
-
-    <node pkg="rviz" type="rviz" name="rviz_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
+    <node pkg="rviz" type="rviz" name="rviz_dynamixelsimtest_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
 </launch>

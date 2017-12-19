@@ -3,7 +3,7 @@
     <arg name="target_tag_id" default="27" />
     <arg name="present_jointstate_topic" default="/motors/present_states" />
     <arg name="goal_jointstate_topic" default="/motors/goal_states" />
-    
+
     <arg name="camera" default="camera" />
     <arg name="device" default="/dev/video0" />
 
@@ -21,7 +21,7 @@
     <!-- dynamixel motor controller -->
     <!-- -->
     <include file="$(find trackerrr)/launch/dynamixel_controller.launch">
-        <arg name="max_dxl_num" value="$(arg dof)" />
+        <arg name="dof" value="$(arg dof)" />
         <arg name="present_jointstate_topic" value="$(arg present_jointstate_topic)" />
         <arg name="goal_jointstate_topic" value="$(arg goal_jointstate_topic)" />
     </include>
