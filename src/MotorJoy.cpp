@@ -24,7 +24,7 @@ MotorJoy::MotorJoy(ros::NodeHandle& n)
 
     // init
     for (int i = 0; i < dof_; i++) {
-        posCurrent_.push_back(0.0);
+        nextGoalState_.push_back(0.0);
         vel_.push_back(0.0);
     }
 }
@@ -58,12 +58,12 @@ void MotorJoy::updatePosition() {
     // get next position
     switch (dof_) {
         case 2:
-            posCurrent_[1] = posCurrent_[1] + (vel_[1] * rate_.expectedCycleTime().toSec());
+            nextGoalState_[1] = nextGoalState_[1] + (vel_[1] * rate_.expectedCycleTime().toSec());
         case 1:
-            posCurrent_[0] = posCurrent_[0] + (vel_[0] * rate_.expectedCycleTime().toSec());
+            nextGoalState_[0] = nextGoalState_[0] + (vel_[0] * rate_.expectedCycleTime().toSec());
             break;
         default:
-            posCurrent_[0] = 0.0;
+            nextGoalState_[0] = 0.0;
             break;
     }
 
@@ -72,19 +72,19 @@ void MotorJoy::updatePosition() {
     /*
     if (nextPos < posMin_) {
         // below minimum, set to minimum
-        posCurrent_ = posMin_;
+        nextGoalState_ = posMin_;
     } else if (nextPos > posMax_) {
         // above maximum, set to maximum
-        posCurrent_ = posMax_;
+        nextGoalState_ = posMax_;
     } else {
-        posCurrent_ = nextPos;
+        nextGoalState_ = nextPos;
     }
     */
 }
 
 void MotorJoy::publishGoalJointState() {
     sensor_msgs::JointState state_msg;
-    state_msg.position = posCurrent_;
+    state_msg.position = nextGoalState_;
     presentJointState_pub_.publish(state_msg);
 }
 

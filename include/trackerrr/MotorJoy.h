@@ -41,10 +41,7 @@ class MotorJoy
         ros::Rate rate_; /**< rate */
 
         int dof_; /**< degrees of freedom */
-
-        std::vector<double> posCurrent_; /**< current positions */
-        double posInit_; /**< initial position */
-        
+        std::vector<double> nextGoalState_; /**< next goal state */
         std::vector<double> vel_; /**< current angular velocities */
 
         /*===========================
