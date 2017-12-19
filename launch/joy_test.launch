@@ -17,6 +17,7 @@
     <node pkg="trackerrr" type="motorjoy_node" name="motorjoy_node" output="screen">
         <param name="dof" value="$(arg dof)" />
         <param name="goal_jointstate_topic" value="/motors/goal_states" />
+        <param name="current_jointstate_topic" value="/motors/present_states" />
     </node>
 
     <!-- dynamixel motor controller -->

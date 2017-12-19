@@ -43,6 +43,7 @@ class MotorJoy
         int dof_; /**< degrees of freedom */
 
         std::vector<double> posCurrent_; /**< current positions */
+        std::vector<double> nextGoalState_; /**< next goal state */
         double posInit_; /**< initial position */
         
         std::vector<double> vel_; /**< current angular velocities */
@@ -56,6 +57,7 @@ class MotorJoy
          * Subscribers
          *===========================*/
         ros::Subscriber vel_sub_; /**< controller/joy vel subscriber */
+        ros::Subscriber pos_sub_; /**< current motor jointstate subscriber */
 
         /*===========================
          * Callbacks

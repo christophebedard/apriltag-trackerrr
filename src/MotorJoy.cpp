@@ -11,13 +11,15 @@ MotorJoy::MotorJoy(ros::NodeHandle& n)
 {
     // get params
     ros::NodeHandle n_p("~");
-    std::string joyVelTopic, goalJointStateTopic;
+    std::string joyVelTopic, goalJointStateTopic, currentJointStateTopic;
     n_p.getParam("dof", dof_);
     n_p.getParam("/teleop/piloting/topic_name", joyVelTopic);
     n_p.getParam("goal_jointstate_topic", goalJointStateTopic);
+    n_p.getParam("current_jointstate_topic", currentJointStateTopic);
 
     // subscribers
     vel_sub_ = n.subscribe(joyVelTopic, 10, &MotorJoy::velCallback, this);
+    pos_sub_ = n.subscribe(currentJointStateTopic, 10, &MotorJoy::jointstateCallback, this);
 
     // publishers
     presentJointState_pub_ = n.advertise<sensor_msgs::JointState>(goalJointStateTopic, 100);
@@ -50,6 +52,11 @@ void MotorJoy::velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
     }
 }
 
+void MotorJoy::jointstateCallback(const sensor_msgs::JointState::ConstPtr& msg) {
+    // extract angle states
+    posCurrent_ = msg->position;
+}
+
 /*===========================
  * Update
  *===========================*/
@@ -58,9 +65,9 @@ void MotorJoy::updatePosition() {
     // get next position
     switch (dof_) {
         case 2:
-            posCurrent_[1] = posCurrent_[1] + (vel_[1] * rate_.expectedCycleTime().toSec());
+            nextGoalState_[1] = posCurrent_[1] + (vel_[1] * rate_.expectedCycleTime().toSec());
         case 1:
-            posCurrent_[0] = posCurrent_[0] + (vel_[0] * rate_.expectedCycleTime().toSec());
+            nextGoalState_[0] = posCurrent_[0] + (vel_[0] * rate_.expectedCycleTime().toSec());
             break;
         default:
             posCurrent_[0] = 0.0;
