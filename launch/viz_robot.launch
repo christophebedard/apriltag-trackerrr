@@ -5,7 +5,12 @@
   
   <rosparam command="load" file="$(find trackerrr)/cfg/robot_r$(arg dof).yaml" />
 
+  <!--
   <node pkg="trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
+    <param name="dof" type="int" value="$(arg dof)" />
+  </node>
+  -->
+  <node pkg="trackerrr" name="tf_from_dh" type="tf_from_dh.py" output="screen">
     <param name="dof" type="int" value="$(arg dof)" />
   </node>
 
