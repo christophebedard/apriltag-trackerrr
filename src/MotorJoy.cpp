@@ -58,32 +58,16 @@ void MotorJoy::velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
 
 void MotorJoy::updatePosition() {
     // get next position
-    switch (dof_) {
-        case 3:
-            nextGoalState_[2] = nextGoalState_[2] + (vel_[2] * rate_.expectedCycleTime().toSec());
-        case 2:
-            nextGoalState_[1] = nextGoalState_[1] + (vel_[1] * rate_.expectedCycleTime().toSec());
-        case 1:
-            nextGoalState_[0] = nextGoalState_[0] + (vel_[0] * rate_.expectedCycleTime().toSec());
-            break;
-        default:
-            nextGoalState_[0] = 0.0;
-            break;
+    for (int i = 0; i < dof_; ++i) {
+        double next = nextGoalState_[i] + (vel_[i] * rate_.expectedCycleTime().toSec());
+        if (next < DYNAMIXEL_POSITION_MIN) {
+            nextGoalState_[i] = DYNAMIXEL_POSITION_MIN;
+        } else if (next > DYNAMIXEL_POSITION_MAX) {
+            nextGoalState_[i] = DYNAMIXEL_POSITION_MAX;
+        } else {
+            nextGoalState_[i] = next;
+        }
     }
-
-    // TODO: check position validity
-    // e.g.
-    /*
-    if (nextPos < posMin_) {
-        // below minimum, set to minimum
-        nextGoalState_ = posMin_;
-    } else if (nextPos > posMax_) {
-        // above maximum, set to maximum
-        nextGoalState_ = posMax_;
-    } else {
-        nextGoalState_ = nextPos;
-    }
-    */
 }
 
 void MotorJoy::publishGoalJointState() {

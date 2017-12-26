@@ -12,6 +12,10 @@
 #include "sensor_msgs/JointState.h"
 
 static const double LOOP_RATE = 30.0;
+static const double PI = 3.1415;
+static const double DYNAMIXEL_POSITION_ANGLE_RESOLUTION = (5.0/3.0)*PI;
+static const double DYNAMIXEL_POSITION_MIN = -DYNAMIXEL_POSITION_ANGLE_RESOLUTION/2.0;
+static const double DYNAMIXEL_POSITION_MAX = DYNAMIXEL_POSITION_ANGLE_RESOLUTION/2.0;
 
 /** \class MotorJoy
  * \brief class which helps control motors with a controller/joy.
