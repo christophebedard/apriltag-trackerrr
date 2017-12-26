@@ -39,6 +39,8 @@ MotorJoy::~MotorJoy() {
 void MotorJoy::velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
     // extract angular velocities
     switch (dof_) {
+        case 3:
+            vel_[2] = msg->angular.y;
         case 2:
             vel_[1] = msg->angular.y;
         case 1:
@@ -57,6 +59,8 @@ void MotorJoy::velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
 void MotorJoy::updatePosition() {
     // get next position
     switch (dof_) {
+        case 3:
+            nextGoalState_[2] = nextGoalState_[2] + (vel_[2] * rate_.expectedCycleTime().toSec());
         case 2:
             nextGoalState_[1] = nextGoalState_[1] + (vel_[1] * rate_.expectedCycleTime().toSec());
         case 1:
