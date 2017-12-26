@@ -13,7 +13,6 @@ NODE_NAME = 'tf_from_dh'
 JOINT_STATE_TOPIC = '/motors/present_states'
 END_EFFECTOR_TF_NAME = '/camera'
 FRAME_TF_NAME_PREFIX = '/joint'
-ANGLE_TOPIC_PREFIX = 'q'
 COL_OFFSET = 0
 COL_D = 1
 COL_A = 2

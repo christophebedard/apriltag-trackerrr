@@ -40,7 +40,7 @@ void MotorJoy::velCallback(const geometry_msgs::Twist::ConstPtr& msg) {
     // extract angular velocities
     switch (dof_) {
         case 3:
-            vel_[2] = msg->angular.y;
+            vel_[2] = msg->angular.x;
         case 2:
             vel_[1] = msg->angular.y;
         case 1:

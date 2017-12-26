@@ -16,3 +16,8 @@ teleop:
         target: angular.z
         scale: 1.5708
         offset: 0.0
+      -
+        axis: 4 # Right thumb stick (up/down)
+        target: angular.x
+        scale: 1.5708
+        offset: 0.0
