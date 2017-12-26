@@ -68,7 +68,7 @@ target_link_libraries(dynamixel_interface_node
 )
 
 add_executable(dynamixelsim_node
-    src/DinamixelSim_node.cpp
+    src/DynamixelSim_node.cpp
     src/DynamixelSim.cpp
     src/MotorSim.cpp
     src/BoundedPID.cpp
