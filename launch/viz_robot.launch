@@ -1,18 +1,20 @@
 <launch>
-  <arg name="dof" default="1" />
+    <arg name="dof" default="1" />
+    <arg name="present_jointstate_topic" default="/motors/present_states" />
 
-  <node pkg="tf" type="static_transform_publisher" name="joint_origin" args="0.0 0.0 0.0 0.0 0.0 0.0 world joint0 100"/>
-  
-  <rosparam command="load" file="$(find trackerrr)/cfg/robot_r$(arg dof).yaml" />
+    <node pkg="tf" type="static_transform_publisher" name="joint_origin" args="0.0 0.0 0.0 0.0 0.0 0.0 world joint0 100"/>
 
-  <!--
-  <node pkg="trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
-    <param name="dof" type="int" value="$(arg dof)" />
-  </node>
-  -->
-  <node pkg="trackerrr" name="tf_from_dh" type="tf_from_dh.py" output="screen">
-    <param name="dof" type="int" value="$(arg dof)" />
-  </node>
+    <rosparam command="load" file="$(find trackerrr)/cfg/robot_r$(arg dof).yaml" />
 
-  <node pkg="rviz" type="rviz" name="vizrobot_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
+    <!--
+    <node pkg="trackerrr" name="dh_to_tf" type="dh_to_tf" output="screen">
+        <param name="dof" type="int" value="$(arg dof)" />
+    </node>
+    -->
+    <node pkg="trackerrr" name="tf_from_dh" type="tf_from_dh.py" output="screen">
+        <param name="dof" type="int" value="$(arg dof)" />
+        <param name="present_jointstate_topic" value="$(arg present_jointstate_topic)" />
+    </node>
+
+    <node pkg="rviz" type="rviz" name="vizrobot_node" args="-d $(find trackerrr)/cfg/rviz.rviz" />
 </launch>

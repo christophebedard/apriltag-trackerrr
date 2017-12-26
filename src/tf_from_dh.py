@@ -10,7 +10,6 @@ import numpy
 from sensor_msgs.msg import JointState
 
 NODE_NAME = 'tf_from_dh'
-JOINT_STATE_TOPIC = '/motors/present_states'
 END_EFFECTOR_TF_NAME = '/camera'
 FRAME_TF_NAME_PREFIX = '/joint'
 COL_OFFSET = 0
@@ -83,6 +82,7 @@ def main():
 
     # get params
     dof = rospy.get_param('~dof')
+    present_jointstate_topic = rospy.get_param('~present_jointstate_topic')
     dh_matrix = rospy.get_param('~/dh_matrix')
     end_effector_xyz['x'] = rospy.get_param('~/end_effector/x')
     end_effector_xyz['y'] = rospy.get_param('~/end_effector/y')
@@ -100,7 +100,7 @@ def main():
         a.append(dh_matrix[COL_TOTAL * (i - 1) + COL_A])
         alpha.append(dh_matrix[COL_TOTAL * (i - 1) + COL_ALPHA])
 
-    rospy.Subscriber(JOINT_STATE_TOPIC, JointState, jointstate_callback)
+    rospy.Subscriber(present_jointstate_topic, JointState, jointstate_callback)
 
     rospy.spin()
 

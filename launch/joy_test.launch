@@ -1,5 +1,6 @@
 <launch>
     <arg name="dof" default="1" />
+    <arg name="present_jointstate_topic" default="/motors/present_states" />
     <arg name="goal_jointstate_topic" default="/motors/goal_states" />
 
     <arg name="joy_dev" default="/dev/input/js0" />
@@ -23,6 +24,7 @@
     <!-- viz of current robot joint states -->
     <include file="$(find trackerrr)/launch/viz_robot.launch">
         <arg name="dof" value="$(arg dof)" />
+        <arg name="present_jointstate_topic" value="$(arg present_jointstate_topic)" />
     </include>
 
     <!-- camera -->
