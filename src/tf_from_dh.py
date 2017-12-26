@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-"""
-Helper node that subscribes to a JointState topic and publishes
-the corresponding transforms based on DH parameters
-"""
+## \file tf_from_dh.py
+# \brief Helper node that subscribes to a JointState topic and publishes
+# the corresponding transforms based on DH parameters.
+# \author christophebedard
 import math
 import rospy
 import tf
