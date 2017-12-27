@@ -60,16 +60,17 @@ class TagTracker : public Tracker
         /**
          * \brief Check if target is currently detected.
          */
-        bool isTargetDetected() const;
+        virtual bool isTargetDetected() const;
 
+        /**
+         * \brief Get tf name of target to track (implementation).
+         */
+        virtual std::string getTargetTfName() const;
 
     private:
         int targetTagID_; /**< id of tag to target */
 
         std::vector<apriltags_ros::AprilTagDetection> detected_tags_; /**< vector containing detection messages */
-
-        image_transport::ImageTransport it_; /**< image transport */
-        image_geometry::PinholeCameraModel cam_model_; /**< camera model */
         
         /*===========================
          * Subscribers

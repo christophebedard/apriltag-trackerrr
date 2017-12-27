@@ -11,11 +11,13 @@ Tracker::Tracker(ros::NodeHandle& n)
 {
     // get params
     ros::NodeHandle n_p("~");
+    std::string goalJointStateTopic;
     n_p.getParam("dof", dof_);
     n_p.getParam("camera", cameraName_);
+    n_p.getParam("goal_jointstate_topic", goalJointStateTopic);
 
     // setup publishers
-    joint_state_command_pub_ = n.advertise<sensor_msgs::JointState>(JOINT_STATE_COMMAND_TOPIC_NAME, 100);
+    joint_state_command_pub_ = n.advertise<sensor_msgs::JointState>(goalJointStateTopic, 100);
 
     // setup DoF-dependent stuff
     for (int i = 0; i < dof_; i++) {
@@ -71,8 +73,8 @@ void Tracker::update() {
         try {
             for (int i = 0; i < dof_; i++) {
                 tf::StampedTransform stf;
-                tf_listener_.waitForTransform(frames_[i], TARGET_TF_NAME, ros::Time(0), ros::Duration(0.5));
-                tf_listener_.lookupTransform(frames_[i], TARGET_TF_NAME, ros::Time(0), stf);
+                tf_listener_.waitForTransform(frames_[i], getTargetTfName(), ros::Time(0), ros::Duration(0.5));
+                tf_listener_.lookupTransform(frames_[i], getTargetTfName(), ros::Time(0), stf);
                 // assuming the transform lookup works is (probably) a bad idea
                 transforms.push_back(stf);
             }

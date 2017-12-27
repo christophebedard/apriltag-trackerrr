@@ -57,8 +57,12 @@ class YoloTracker : public Tracker
         /**
          * \brief Check if target is currently detected.
          */
-        bool isTargetDetected() const;
+        virtual bool isTargetDetected() const;
 
+        /**
+         * \brief Get tf name of target to track (implementation).
+         */
+        virtual std::string getTargetTfName() const;
 
     private:
         std::string targetObject_; /**< name of target object */

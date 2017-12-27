@@ -45,6 +45,10 @@ bool YoloTracker::isObjectDetected(std::string object) const {
     return false;
 }
 
+std::string YoloTracker::getTargetTfName() const {
+    return "/" + targetObject_;
+}
+
 cv::Point2d YoloTracker::getObjectPosition2d(std::string object) {
     for (darknet_ros_msgs::BoundingBox box : detectedObjects_) {
         if (box.Class == object) {
@@ -88,7 +92,7 @@ void YoloTracker::update() {
         tf.setOrigin(tf::Vector3(pos3d.x, pos3d.y, pos3d.z));
         q.setRPY(0.0, 0.0, 0.0);
         tf.setRotation(q);
-        tf_br_.sendTransform(tf::StampedTransform(tf, ros::Time::now(), "/"+cameraName_, TARGET_TF_NAME));
+        tf_br_.sendTransform(tf::StampedTransform(tf, ros::Time::now(), "/"+cameraName_, getTargetTfName()));
     }
 
     Tracker::update();

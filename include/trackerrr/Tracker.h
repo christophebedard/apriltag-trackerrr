@@ -21,10 +21,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-static const std::string JOINT_STATE_COMMAND_TOPIC_NAME = "/motors/goal_states"; /**< topic for position commands */
 static const std::string TARGET_POSE_TOPIC_NAME_PREFIX = "/target_q"; /**< topic prefix for position commands pose */
 static const std::string JOINT_TF_NAME_PREFIX = "/joint"; /**< topic name prefix for joint position */
-static const std::string TARGET_TF_NAME = "/target"; /**< tf name for target (which derived class will broadcast) */
 
 /** \class Tracker
  * \brief abstract class for tracking.
@@ -83,6 +81,11 @@ class Tracker
          * \brief Check if target is currently detected.
          */
         virtual bool isTargetDetected() const =0;
+
+        /**
+         * \brief Get tf name of target to track (from derived class).
+         */
+        virtual std::string getTargetTfName() const =0;
     
     private:
         /*===========================

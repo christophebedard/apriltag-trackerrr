@@ -7,7 +7,7 @@
 #include "trackerrr/TagTracker.h"
 
 TagTracker::TagTracker(ros::NodeHandle& n)
-    : Tracker(n), it_(n)
+    : Tracker(n)
 {
     // get params
     ros::NodeHandle n_p("~");
@@ -35,6 +35,10 @@ bool TagTracker::isTagDetected(int tag_id) const {
     return false;
 }
 
+std::string TagTracker::getTargetTfName() const {
+    return TAG_TF_NAME_PREFIX + std::to_string(targetTagID_);
+}
+
 /*===========================
  * Callbacks
  *===========================*/
@@ -49,19 +53,6 @@ void TagTracker::tagPositionCallback(const apriltags_ros::AprilTagDetectionArray
  *===========================*/
 
 void TagTracker::update() {
-    if (isTagDetected(targetTagID_)) {
-        try {
-            // lookup target tag transform (with ID)
-            tf::StampedTransform stf;
-            tf_listener_.waitForTransform("/camera", TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), ros::Duration(0.5));
-            tf_listener_.lookupTransform("/camera", TAG_TF_NAME_PREFIX+std::to_string(targetTagID_), ros::Time(0), stf);
-            // re-broadcast (for base class)
-            tf_br_.sendTransform(tf::StampedTransform(tf::Transform(stf.getRotation(), stf.getOrigin()), ros::Time::now(), "/camera", TARGET_TF_NAME));
-        } catch (tf::TransformException ex) {
-            ROS_ERROR("Error looking up tag transform: %s", ex.what());
-        }
-    }
-
     Tracker::update();
 }
 

@@ -90,35 +90,36 @@ Visualization Manager:
       Axes Length: 1
       Axes Radius: 0.100000001
       Class: rviz/Pose
-      Color: 85; 255; 255
+      Color: 255; 255; 255
       Enabled: true
-      Head Length: 0.100000001
-      Head Radius: 0.0500000007
+      Head Length: 0.0799999982
+      Head Radius: 0.0399999991
       Name: Pose
       Shaft Length: 0.25
       Shaft Radius: 0.0199999996
       Shape: Arrow
-      Topic: /target1
+      Topic: /target_q1
       Unreliable: false
       Value: true
     - Alpha: 1
       Axes Length: 1
       Axes Radius: 0.100000001
       Class: rviz/Pose
-      Color: 0; 255; 255
+      Color: 255; 255; 255
       Enabled: true
-      Head Length: 0.100000001
-      Head Radius: 0.0500000007
+      Head Length: 0.0799999982
+      Head Radius: 0.0399999991
       Name: Pose
       Shaft Length: 0.25
       Shaft Radius: 0.0199999996
       Shape: Arrow
-      Topic: /target2
+      Topic: /target_q2
       Unreliable: false
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
+    Default Light: true
     Fixed Frame: world
     Frame Rate: 30
   Name: root
@@ -155,10 +156,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.747590244
+      Pitch: 0.627590358
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.88601851
+      Yaw: 1.53601885
     Saved: ~
 Window Geometry:
   Displays:
