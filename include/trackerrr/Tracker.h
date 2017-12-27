@@ -18,6 +18,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <sensor_msgs/JointState.h>
+#include <std_srvs/Empty.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -95,6 +96,11 @@ class Tracker
         std::vector<ros::Publisher> target_pose_pubs_; /**< publishers for target pose */
 
         /*===========================
+         * Services
+         *===========================*/
+        ros::ServiceServer reset_srv_; /**< reset service */
+
+        /*===========================
          * Utilities
          *===========================*/
         /**
@@ -126,6 +132,24 @@ class Tracker
          * \param poses : vector of posestamped messages to publish.
          */
         void publishTargetPoses(const std::vector<geometry_msgs::PoseStamped>& poses);
+
+        /**
+         * \brief Reset motors.
+         */
+        void reset();
+
+        /*===========================
+         * Callbacks
+         *===========================*/
+        /**
+         * \brief Callback class method for reset service.
+         *
+         * \param request : service request.
+         * \param response : service response (empty).
+         *
+         * \return success.
+         */
+        bool resetCallback(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
 };
 
 

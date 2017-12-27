@@ -3,6 +3,7 @@
     <arg name="target_tag_id" default="27" />
     <arg name="present_jointstate_topic" default="/motors/present_states" />
     <arg name="goal_jointstate_topic" default="/motors/goal_states" />
+    <arg name="reset_srv_name" default="/motors/reset" />
 
     <arg name="camera" default="camera" />
     <arg name="device" default="/dev/video0" />
@@ -22,6 +23,7 @@
     <node pkg="trackerrr" type="tagtracker_node" name="tagtracker" output="screen">
         <param name="dof" value="$(arg dof)" />
         <param name="goal_jointstate_topic" value="$(arg goal_jointstate_topic)" />
+        <param name="reset_srv_name" value="$(arg reset_srv_name)" />
         <param name="target_tag_id" value="$(arg target_tag_id)" />
         <param name="camera" value="$(arg camera)" />
     </node>

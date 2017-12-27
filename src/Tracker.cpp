@@ -11,13 +11,17 @@ Tracker::Tracker(ros::NodeHandle& n)
 {
     // get params
     ros::NodeHandle n_p("~");
-    std::string goalJointStateTopic;
+    std::string goalJointStateTopic, resetSrvName;
     n_p.getParam("dof", dof_);
     n_p.getParam("camera", cameraName_);
     n_p.getParam("goal_jointstate_topic", goalJointStateTopic);
+    n_p.getParam("reset_srv_name", resetSrvName);
 
     // setup publishers
     joint_state_command_pub_ = n.advertise<sensor_msgs::JointState>(goalJointStateTopic, 100);
+
+    // setup services
+    reset_srv_ = n.advertiseService(resetSrvName, &Tracker::resetCallback, this);
 
     // setup DoF-dependent stuff
     for (int i = 0; i < dof_; i++) {
@@ -25,14 +29,35 @@ Tracker::Tracker(ros::NodeHandle& n)
         frames_.push_back(JOINT_TF_NAME_PREFIX + std::to_string(i));
         angles_.push_back(0.0);
     }
+
+    // reset motors
+    reset();
 }
 
 Tracker::~Tracker() {
 }
 
 /*===========================
+ * Callbacks
+ *===========================*/
+
+bool Tracker::resetCallback(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response) {
+    reset();
+    return true;
+}
+
+/*===========================
  * Utilities
  *===========================*/
+
+void Tracker::reset() {
+    std::vector<double> resetAngles;
+    for (int i = 0; i < dof_; i++) {
+        resetAngles.push_back(0.0);
+    }
+    joint_state_command_pub_.publish(createJointStateFromAngles(resetAngles));
+    publishTargetPoses(createPoseStampedVectorFromAngles(resetAngles));
+}
 
 void Tracker::clearCommandAngles() {
     angles_.clear();
