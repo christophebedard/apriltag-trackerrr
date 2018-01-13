@@ -2,7 +2,7 @@
 
 Track tags and other features with an RRR robot manipulator.
 
-# Prerequisites
+## Prerequisites
 
 1. [ROS kinetic](http://wiki.ros.org/kinetic/Installation/Ubuntu)
 
@@ -88,3 +88,24 @@ Generate documentation with
 ````
 doxygen Doxyfile
 ````  
+
+## Launch files
+
+Some of the main launch files:
+
+* `tracker_tag.launch`  
+   * tracks an AprilTag (`apriltags_ros` needed!)  
+   * *main arguments*  
+      * `dof` : degrees of freedom of the robot [1]
+      * `target_tag_id` : ID of target tag [27]
+
+* `tracker_yolo.launch`  
+   * tracks an object (`darknet_ros` needed!)  
+   * *main arguments*  
+      * `dof` : degrees of freedom of the robot [1]
+      * `target_object` : name/class of target object
+
+* `joy_test.launch`  
+   * drives the robot with a controller (why not)  
+   * *main argument*  
+      * `dof` : degrees of freedom of the robot [1]
