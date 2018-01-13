@@ -80,4 +80,11 @@ Follow [this tutorial](http://wiki.ros.org/camera_calibration/Tutorials/Monocula
 
 ### Dynamixel parameters
 
-For the AX-12A, use `1000000` for `baud_rate` and `1.0` for `protocol_version`.
+For model AX-12A, use `1000000` for `baud_rate` and `1.0` for `protocol_version`.
+
+# Documentation
+
+Generate documentation with  
+````
+doxygen Doxyfile
+````  
