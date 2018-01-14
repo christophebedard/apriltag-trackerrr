@@ -63,13 +63,11 @@ Visualization Manager:
           Value: true
         joint2:
           Value: true
-        tag_27:
-          Value: true
-        tag_9:
+        joint3:
           Value: true
         world:
           Value: false
-      Marker Scale: 1
+      Marker Scale: 0.200000003
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -79,10 +77,8 @@ Visualization Manager:
           joint0:
             joint1:
               joint2:
-                camera:
-                  tag_27:
-                    {}
-                  tag_9:
+                joint3:
+                  camera:
                     {}
       Update Interval: 0
       Value: true
@@ -141,25 +137,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.40965438
+      Distance: 0.301756859
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.0203503668
-        Y: -0.0536987782
-        Z: 0.0270248652
+        X: -0.00591473188
+        Y: -0.0482999124
+        Z: 0.039967414
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.627590358
+      Pitch: 0.492589772
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.53601885
+      Yaw: 1.10601926
     Saved: ~
 Window Geometry:
   Displays:
