@@ -37,7 +37,6 @@
     <depend>open_manipulator_moveit</depend>
     <depend>open_manipulator_position_ctrl</depend>
     <depend>open_manipulator_msgs</depend>
-    <build_depend>message_generation</build_depend>
     <build_export_depend>message_runtime</build_export_depend>
     <exec_depend>message_runtime</exec_depend>
     <doc_depend>doxygen</doc_depend>
