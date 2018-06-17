@@ -39,6 +39,7 @@ Track tags and other features with an RRR robot manipulator.
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
    git clone https://github.com/christophebedard/open_manipulator.git
+   git clone https://github.com/ROBOTIS-GIT/open_manipulator_msgs.git
    ````  
    `camera_umd` (deprecated) is used instead of `libuvc_camera` because of [this](https://github.com/ros-drivers/libuvc_ros/issues/15)
 
