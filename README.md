@@ -77,7 +77,7 @@ Track tags and other features with an RRR robot manipulator.
 
 ### Camera calibration
 
-Follow [this tutorial](http://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration). Put the parameters in the `cfg/camera.yaml` file.
+Follow [this tutorial](http://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration). Put the parameters in the `trackerrr/cfg/camera.yaml` file.
 
 ### Dynamixel parameters
 
