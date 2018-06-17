@@ -17,7 +17,6 @@ find_package(catkin REQUIRED COMPONENTS
     cv_bridge
     image_geometry
     image_transport
-    apriltags_ros
     dynamixel_sdk
     dynamixel_workbench_controllers
     dynamixel_workbench_operators
@@ -36,7 +35,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
     INCLUDE_DIRS include
-    CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs control_toolbox uvc_camera jpeg_streamer cv_bridge image_geometry image_transport apriltags_ros darknet_ros dynamixel_sdk dynamixel_workbench_controllers dynamixel_workbench_operators dynamixel_workbench_single_manager dynamixel_workbench_single_manager_gui dynamixel_workbench_toolbox dynamixel_workbench_msgs open_manipulator_description open_manipulator_dynamixel_ctrl open_manipulator_moveit open_manipulator_position_ctrl open_manipulator_msgs message_generation message_runtime
+    CATKIN_DEPENDS roscpp rospy tf std_msgs std_srvs geometry_msgs sensor_msgs control_toolbox uvc_camera jpeg_streamer cv_bridge image_geometry image_transport dynamixel_sdk dynamixel_workbench_controllers dynamixel_workbench_operators dynamixel_workbench_single_manager dynamixel_workbench_single_manager_gui dynamixel_workbench_toolbox dynamixel_workbench_msgs open_manipulator_description open_manipulator_dynamixel_ctrl open_manipulator_moveit open_manipulator_position_ctrl open_manipulator_msgs message_generation message_runtime
 )
 
 ###########
