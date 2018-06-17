@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>trackerrr</name>
+    <version>0.0.0</version>
+    <description>
+        The trackerrr package, for tracking tags and other features with an RRR robot manipulator.
+    </description>
+    <maintainer email="christophe.bedard@polymtl.ca">christophebedard</maintainer>
+
+    <license>GPL-3.0</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <depend>roscpp</depend>
+    <depend>rospy</depend>
+    <depend>tf</depend>
+    <depend>std_msgs</depend>
+    <depend>std_srvs</depend>
+    <depend>geometry_msgs</depend>
+    <depend>sensor_msgs</depend>
+    <depend>control_toolbox</depend>
+    <depend>uvc_camera</depend>
+    <depend>jpeg_streamer</depend>
+    <depend>cv_bridge</depend>
+    <depend>image_geometry</depend>
+    <depend>image_transport</depend>
+    <depend>apriltags_ros</depend>
+    <depend>darknet_ros</depend>
+    <depend>dynamixel_sdk</depend>
+    <depend>dynamixel_workbench_controllers</depend>
+    <depend>dynamixel_workbench_operators</depend>
+    <depend>dynamixel_workbench_single_manager</depend>
+    <depend>dynamixel_workbench_single_manager_gui</depend>
+    <depend>dynamixel_workbench_toolbox</depend>
+    <depend>dynamixel_workbench_msgs</depend>
+    <depend>open_manipulator_description</depend>
+    <depend>open_manipulator_dynamixel_ctrl</depend>
+    <depend>open_manipulator_moveit</depend>
+    <depend>open_manipulator_position_ctrl</depend>
+    <depend>open_manipulator_msgs</depend>
+    <build_export_depend>message_runtime</build_export_depend>
+    <exec_depend>message_runtime</exec_depend>
+    <doc_depend>doxygen</doc_depend>
+
+    <export>
+    </export>
+</package>
