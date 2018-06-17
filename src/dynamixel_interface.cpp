@@ -36,7 +36,7 @@ int last_pos = 0;
  */
 void infoCallback(const dynamixel_workbench_msgs::AX::ConstPtr& msg){
     std_msgs::Float64 pos_msg;
-    pos_msg.data = (((msg->present_position - DYNAMIXEL_POSITION_RES_MIN)/(DYNAMIXEL_POSITION_RES_MAX - DYNAMIXEL_POSITION_RES_MIN))*(DYNAMIXEL_POSITION_ANGLE_MAX - DYNAMIXEL_POSITION_ANGLE_MIN)) + DYNAMIXEL_POSITION_ANGLE_MIN;
+    pos_msg.data = (((msg->Present_Position - DYNAMIXEL_POSITION_RES_MIN)/(DYNAMIXEL_POSITION_RES_MAX - DYNAMIXEL_POSITION_RES_MIN))*(DYNAMIXEL_POSITION_ANGLE_MAX - DYNAMIXEL_POSITION_ANGLE_MIN)) + DYNAMIXEL_POSITION_ANGLE_MIN;
     position_pub.publish(pos_msg);
 }
 
