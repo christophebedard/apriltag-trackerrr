@@ -1,0 +1,19 @@
+# Package dependencies from source
+- git:
+    local-name: DynamixelSDK
+    uri: https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+- git:
+    local-name: apriltags_ros
+    uri: https://github.com/RIVeR-Lab/apriltags_ros.git
+- git:
+    local-name: dynamixel-workbench
+    uri: https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
+- git:
+    local-name: dynamixel-workbench-msgs
+    uri: https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
+- git:
+    local-name: open_manipulator
+    uri: https://github.com/christophebedard/open_manipulator.git
+- git:
+    local-name: open_manipulator_msgs
+    uri: https://github.com/ROBOTIS-GIT/open_manipulator_msgs.git
