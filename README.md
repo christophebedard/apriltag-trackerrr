@@ -87,7 +87,7 @@ For model AX-12A, use `1000000` for `baud_rate` and `1.0` for `protocol_version`
 
 Generate documentation with  
 ````
-doxygen Doxyfile
+doxygen trackerrr/Doxyfile
 ````  
 
 ## Launch files
