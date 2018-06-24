@@ -1,4 +1,4 @@
-# trackerrr
+# trackerrr [![Build Status](https://travis-ci.org/christophebedard/trackerrr.svg?branch=master)](https://travis-ci.org/christophebedard/trackerrr)
 
 Track tags and other features with an RRR robot manipulator.
 
@@ -13,8 +13,10 @@ Track tags and other features with an RRR robot manipulator.
    ros-kinetic-gazebo-ros-control \
    ros-kinetic-position-controllers \
    ros-kinetic-robotis-math \
-   ros-kinetic-moveit
-   ````
+   ros-kinetic-moveit \
+   ros-kinetic-camera-umd
+   ````  
+   `camera_umd` (deprecated) is used instead of `libuvc_camera` because of [this](https://github.com/ros-drivers/libuvc_ros/issues/15)
 
 ## Initial setup
 
@@ -34,14 +36,12 @@ Track tags and other features with an RRR robot manipulator.
 3. Clone the following packages in the `~/tracker_ws/src` folder  
    ````
    cd ~/tracker_ws/src
-   git clone https://github.com/ros-drivers/camera_umd.git
    git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench.git
    git clone https://github.com/ROBOTIS-GIT/dynamixel-workbench-msgs.git
    git clone https://github.com/christophebedard/open_manipulator.git
    git clone https://github.com/ROBOTIS-GIT/open_manipulator_msgs.git
-   ````  
-   `camera_umd` (deprecated) is used instead of `libuvc_camera` because of [this](https://github.com/ros-drivers/libuvc_ros/issues/15)
+   ````
 
 4. Additionally, clone these to:  
    1. track AprilTags  

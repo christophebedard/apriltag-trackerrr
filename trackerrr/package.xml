@@ -23,8 +23,6 @@
     <depend>cv_bridge</depend>
     <depend>image_geometry</depend>
     <depend>image_transport</depend>
-    <depend>apriltags_ros</depend>
-    <depend>darknet_ros</depend>
     <depend>dynamixel_sdk</depend>
     <depend>dynamixel_workbench_controllers</depend>
     <depend>dynamixel_workbench_operators</depend>
