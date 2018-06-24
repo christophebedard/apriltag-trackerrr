@@ -1,4 +1,4 @@
-# trackerrr [![Build Status](https://travis-ci.org/christophebedard/trackerrr.svg?branch=master)](https://travis-ci.org/christophebedard/trackerrr)
+# trackerrr [![Build Status](https://travis-ci.org/christophebedard/trackerrr.svg?branch=kinetic-devel)](https://travis-ci.org/christophebedard/trackerrr)
 
 Track tags and other features with an RRR robot manipulator.
 
