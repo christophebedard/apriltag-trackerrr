@@ -61,6 +61,7 @@ script:
   - source devel/setup.bash
 
 after_success:
+  - cd $CI_SOURCE_PATH
   - doxygen trackerrr/Doxyfile
 
 deploy:
