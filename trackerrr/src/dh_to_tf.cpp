@@ -29,9 +29,11 @@ double end_effector_x, end_effector_y, end_effector_z, end_effector_roll, end_ef
 tf::Transform end_effector_tf;
 
 /**
- * \brief JointState callback. Publishes corresponding transforms.
+ * \brief JointState callback
  *
- * \param msg : constptr to JointState message.
+ * Publishes corresponding transforms
+ *
+ * \param msg   constptr to JointState message
  */
 void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg) {
     static tf::TransformBroadcaster br;
@@ -71,7 +73,7 @@ void angleCallback(const std_msgs::Float64::ConstPtr& msg) {
 */
 
 /**
- * \brief main.
+ * \brief Entry point for dh_to_tf
  */
 int main(int argc, char** argv) {
     ros::init(argc, argv, NODE_NAME);

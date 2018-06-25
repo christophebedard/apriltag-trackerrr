@@ -6,6 +6,9 @@
 
 #include "trackerrr/TagTracker.h"
 
+/**
+ * \brief Entry point for tagtracker_node
+ */
 int main(int argc, char** argv) {
     ros::init(argc, argv, "tagtracker");
     ros::NodeHandle n;

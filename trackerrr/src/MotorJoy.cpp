@@ -96,6 +96,9 @@ void MotorJoy::spin() {
     }
 }
 
+/**
+ * \brief Entry point for motorjoy_node
+ */
 int main(int argc, char** argv) {
     ros::init(argc, argv, "motorjoy");
     ros::NodeHandle n;

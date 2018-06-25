@@ -13,21 +13,22 @@
 
 static const double LOOP_RATE = 20.0;
 
-/** \class YoloTracker
- * \brief class which tracks an object with YOLO.
+/**
+ * \class YoloTracker
+ * \brief class which tracks an object with YOLO
  */
 class YoloTracker : public Tracker
 {
     public:
         /**
-         * \brief YoloTracker constructor.
+         * \brief YoloTracker constructor
          *
-         * \param n : node handle.
+         * \param n     node handle
          */
         YoloTracker(ros::NodeHandle& n);
         
         /**
-         * \brief YoloTracker destructor.
+         * \brief YoloTracker destructor
          */
         ~YoloTracker();
 
@@ -42,12 +43,12 @@ class YoloTracker : public Tracker
          * Update
          *===========================*/
         /**
-         * \brief Update; called every spinOnce().
+         * \brief Update; called every spinOnce()
          */
         void update();
 
         /**
-         * \brief ROS spin once, called on every loop.
+         * \brief ROS spin once, called on every loop
          */
         void spinOnce();
 
@@ -55,57 +56,57 @@ class YoloTracker : public Tracker
          * Utilities
          *===========================*/
         /**
-         * \brief Check if target is currently detected.
+         * \brief Check if target is currently detected
          */
         virtual bool isTargetDetected() const;
 
         /**
-         * \brief Get tf name of target to track (implementation).
+         * \brief Get tf name of target to track (implementation)
          */
         virtual std::string getTargetTfName() const;
 
     private:
-        std::string targetObject_; /**< name of target object */
-        std::string objectDetectionTopic_; /**< topic name for darknet BoundingBoxes msg */
-        std::string objectFoundTopic_; /**< topic name for darknet object found msg */
-        std::string imageTopic_;  /**< topic name for camera image */
+        std::string targetObject_; ///< name of target object
+        std::string objectDetectionTopic_; ///< topic name for darknet BoundingBoxes msg
+        std::string objectFoundTopic_; ///< topic name for darknet object found msg
+        std::string imageTopic_;  ///< topic name for camera image
 
-        std::vector<darknet_ros_msgs::BoundingBox> detectedObjects_; /**< vector containing detection messages */
-        int8_t objectsFound_; /**< number of objects found in latest image */
+        std::vector<darknet_ros_msgs::BoundingBox> detectedObjects_; ///< vector containing detection messages
+        int8_t objectsFound_; ///< number of objects found in latest image
 
-        image_transport::ImageTransport it_; /**< image transport */
-        image_geometry::PinholeCameraModel cam_model_; /**< camera model */
+        image_transport::ImageTransport it_; ///< image transport
+        image_geometry::PinholeCameraModel cam_model_; ///< camera model
         
         /*===========================
          * Subscribers
          *===========================*/
-        ros::Subscriber objectDetect_sub_; /**< YOLO detection subscriber */
-        ros::Subscriber objectFound_sub_; /**< YOLO object found subscriber */
-        image_transport::CameraSubscriber image_sub_; /**< camera image subscriber */
-        tf::TransformListener tf_listener_; /**< tf listener */
+        ros::Subscriber objectDetect_sub_; ///< YOLO detection subscriber
+        ros::Subscriber objectFound_sub_; ///< YOLO object found subscriber
+        image_transport::CameraSubscriber image_sub_; ///< camera image subscriber
+        tf::TransformListener tf_listener_; ///< tf listener
 
         /*===========================
          * Callbacks
          *===========================*/
         /**
-         * \brief Callback class method for YOLO object detection.
+         * \brief Callback class method for YOLO object detection
          *
-         * \param msg : constptr to darknet BoundingBoxes message.
+         * \param msg   constptr to darknet BoundingBoxes message
          */
         void objectCallback(const darknet_ros_msgs::BoundingBoxes::ConstPtr& msg);
 
         /**
-         * \brief Callback class method for YOLO object found message.
+         * \brief Callback class method for YOLO object found message
          *
-         * \param msg : constptr to std_msgs::Int8 message.
+         * \param msg   constptr to std_msgs::Int8 message
          */
         void objectFoundCallback(const std_msgs::Int8::ConstPtr& msg);
 
         /**
-         * \brief Callback class method for camera image.
+         * \brief Callback class method for camera image
          *
-         * \param msg : constptr to image message.
-         * \param cam_info : constptr to camera info message.
+         * \param msg       constptr to image message
+         * \param cam_info  constptr to camera info message
          */
         void imageCallback(const sensor_msgs::ImageConstPtr& msg, const sensor_msgs::CameraInfoConstPtr& cam_info);
 
@@ -113,20 +114,20 @@ class YoloTracker : public Tracker
          * Utilities
          *===========================*/
         /**
-         * \brief Check if object is detected.
+         * \brief Check if object is detected
          *
-         * \param object : name of object to look for.
+         * \param object    name of object to look for
          *
-         * \return detection result.
+         * \return detection result
          */
         bool isObjectDetected(std::string object) const;
 
         /**
-         * \brief Get 2D position of object in image.
+         * \brief Get 2D position of object in image
          *
-         * \param object : name of object to look for.
+         * \param object    name of object to look for
          *
-         * \return position.
+         * \return position
          */
         cv::Point2d getObjectPosition2d(std::string object);
 

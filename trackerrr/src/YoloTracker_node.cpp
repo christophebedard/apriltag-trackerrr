@@ -6,6 +6,9 @@
 
 #include "trackerrr/YoloTracker.h"
 
+/**
+ * \brief Entry point for yolotracker_node
+ */
 int main(int argc, char** argv) {
     ros::init(argc, argv, "yolotracker");
     ros::NodeHandle n;

@@ -30,22 +30,26 @@ ros::ServiceClient position_command_srv;
 int last_pos = 0;
 
 /**
- * \brief Callback function for Dynamixel AX-12A info message. Republishes equivalent in radians.
+ * \brief Callback function for Dynamixel AX-12A info message
  *
- * \param msg : constptr to dynamixel AX info message.
+ * Republishes equivalent in radians.
+ *
+ * \param msg   constptr to dynamixel AX info message
  */
-void infoCallback(const dynamixel_workbench_msgs::AX::ConstPtr& msg){
+void infoCallback(const dynamixel_workbench_msgs::AX::ConstPtr& msg) {
     std_msgs::Float64 pos_msg;
     pos_msg.data = (((msg->Present_Position - DYNAMIXEL_POSITION_RES_MIN)/(DYNAMIXEL_POSITION_RES_MAX - DYNAMIXEL_POSITION_RES_MIN))*(DYNAMIXEL_POSITION_ANGLE_MAX - DYNAMIXEL_POSITION_ANGLE_MIN)) + DYNAMIXEL_POSITION_ANGLE_MIN;
     position_pub.publish(pos_msg);
 }
 
 /**
- * \brief Callback function for position command. Calls Dynamixel position command from position command in radians.
+ * \brief Callback function for position command
  *
- * \param msg : constptr to angle command message.
+ * Calls Dynamixel position command from position command in radians.
+ *
+ * \param msg   constptr to angle command message
  */
-void positionCommandCallback(const std_msgs::Float64::ConstPtr& msg){
+void positionCommandCallback(const std_msgs::Float64::ConstPtr& msg) {
     int new_pos = (int)((DYNAMIXEL_POSITION_RES_MAX - DYNAMIXEL_POSITION_RES_MIN)*((msg->data - DYNAMIXEL_POSITION_ANGLE_MIN)/(DYNAMIXEL_POSITION_ANGLE_MAX - DYNAMIXEL_POSITION_ANGLE_MIN))) + DYNAMIXEL_POSITION_RES_MIN;
 
     // if new position command is out of bounds, send last (valid) command
@@ -64,7 +68,8 @@ void positionCommandCallback(const std_msgs::Float64::ConstPtr& msg){
 }
 
 /**
- * \brief Function for torque enabling.
+ * \brief Function for torque enabling
+ *
  * Calls service with correct parameter.
  */
 void enableTorque() {
@@ -76,9 +81,9 @@ void enableTorque() {
 }
 
 /**
- * \brief main.
+ * \brief Entry point for dynamixel_interface_node
  */
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
     ros::init(argc, argv, NODE_NAME);
     ros::NodeHandle n;
 

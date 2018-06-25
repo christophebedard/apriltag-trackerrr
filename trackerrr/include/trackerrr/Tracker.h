@@ -22,11 +22,12 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-static const std::string TARGET_POSE_TOPIC_NAME_PREFIX = "/target_q"; /**< topic prefix for position commands pose */
-static const std::string JOINT_TF_NAME_PREFIX = "/joint"; /**< topic name prefix for joint position */
+static const std::string TARGET_POSE_TOPIC_NAME_PREFIX = "/target_q"; ///< topic prefix for position commands pose 
+static const std::string JOINT_TF_NAME_PREFIX = "/joint"; ///< topic name prefix for joint position
 
-/** \class Tracker
- * \brief abstract class for tracking.
+/**
+ * \class Tracker
+ * \brief abstract class for tracking
  *
  * Expects a derived class to publish /target tf, then it updates the angles_ vector with joint position commands.
  */
@@ -34,14 +35,14 @@ class Tracker
 {
     public:
         /**
-         * \brief Tracker constructor.
+         * \brief Tracker constructor
          *
-         * \param n : node handle.
+         * \param n     node handle
          */
         Tracker(ros::NodeHandle& n);
         
         /**
-         * \brief Tracker destructor.
+         * \brief Tracker destructor
          */
         ~Tracker();
 
@@ -51,27 +52,27 @@ class Tracker
         virtual void spin() =0;
 
     protected:
-        ros::NodeHandle n_; /**< node handle */
+        ros::NodeHandle n_; ///< node handle
 
-        int dof_; /**< degrees of freedom */
-        std::vector<std::string> frames_; /**< vector containing DOF frames */
-        std::vector<double> angles_; /**< vector containing target angles for next command */
+        int dof_; ///< degrees of freedom
+        std::vector<std::string> frames_; ///< vector containing DOF frames
+        std::vector<double> angles_; ///< vector containing target angles for next command
 
-        std::string cameraName_; /**< camera name (used as namespace and tf name) */
+        std::string cameraName_; ///< camera name (used as namespace and tf name)
 
-        tf::TransformListener tf_listener_; /**< tf listener */
-        tf::TransformBroadcaster tf_br_; /**< tf broadcaster */
+        tf::TransformListener tf_listener_; ///< tf listener
+        tf::TransformBroadcaster tf_br_; ///< tf broadcaster
         
         /*===========================
          * Update
          *===========================*/
         /**
-         * \brief Update; called every spinOnce().
+         * \brief Update; called every spinOnce()
          */
         virtual void update();
 
         /**
-         * \brief ROS spin once, called on every loop.
+         * \brief ROS spin once, called on every loop
          */
         virtual void spinOnce() =0;
 
@@ -79,12 +80,12 @@ class Tracker
          * Utilities
          *===========================*/
         /**
-         * \brief Check if target is currently detected.
+         * \brief Check if target is currently detected
          */
         virtual bool isTargetDetected() const =0;
 
         /**
-         * \brief Get tf name of target to track (from derived class).
+         * \brief Get tf name of target to track (from derived class)
          */
         virtual std::string getTargetTfName() const =0;
     
@@ -92,44 +93,44 @@ class Tracker
         /*===========================
          * Publishers
          *===========================*/
-        ros::Publisher joint_state_command_pub_; /**< publisher for joint state command */
-        std::vector<ros::Publisher> target_pose_pubs_; /**< publishers for target pose */
+        ros::Publisher joint_state_command_pub_; ///< publisher for joint state command
+        std::vector<ros::Publisher> target_pose_pubs_; ///< publishers for target pose
 
         /*===========================
          * Services
          *===========================*/
-        ros::ServiceServer reset_srv_; /**< reset service */
+        ros::ServiceServer reset_srv_; ///< reset service
 
         /*===========================
          * Utilities
          *===========================*/
         /**
-         * \brief Clears command angles from vector.
+         * \brief Clears command angles from vector
          */
         void clearCommandAngles();
         
         /**
-         * \brief Create PoseStamped messages from angles and frames.
+         * \brief Create PoseStamped messages from angles and frames
          *
-         * \param angles : vector of angles (corresponding to DOFs).
+         * \param angles    vector of angles (corresponding to DOFs)
          *
-         * \return resulting vector of poses.
+         * \return resulting vector of poses
          */
         std::vector<geometry_msgs::PoseStamped> createPoseStampedVectorFromAngles(const std::vector<double>& angles);
 
         /**
-         * \brief Create JointState message from angles vector.
+         * \brief Create JointState message from angles vector
          *
-         * \param angles : vector of angles (corresponding to DOFs).
+         * \param angles    vector of angles (corresponding to DOFs)
          *
-         * \return resulting jointstate message.
+         * \return resulting jointstate message
          */
         sensor_msgs::JointState createJointStateFromAngles(const std::vector<double>& angles);
 
         /**
-         * \brief Publish target poses from vector.
+         * \brief Publish target poses from vector
          *
-         * \param poses : vector of posestamped messages to publish.
+         * \param poses     vector of posestamped messages to publish
          */
         void publishTargetPoses(const std::vector<geometry_msgs::PoseStamped>& poses);
 
@@ -142,12 +143,12 @@ class Tracker
          * Callbacks
          *===========================*/
         /**
-         * \brief Callback class method for reset service.
+         * \brief Callback class method for reset service
          *
-         * \param request : service request.
-         * \param response : service response (empty).
+         * \param request   service request
+         * \param response  service response (empty)
          *
-         * \return success.
+         * \return success
          */
         bool resetCallback(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response);
 };

@@ -17,8 +17,9 @@ static const double DYNAMIXEL_POSITION_ANGLE_RESOLUTION = (5.0/3.0)*PI;
 static const double DYNAMIXEL_POSITION_MIN = -DYNAMIXEL_POSITION_ANGLE_RESOLUTION/2.0;
 static const double DYNAMIXEL_POSITION_MAX = DYNAMIXEL_POSITION_ANGLE_RESOLUTION/2.0;
 
-/** \class DynamixelSim
- * \brief class which simulates one or many dynamixel motors.
+/**
+ * \class DynamixelSim
+ * \brief class which simulates one or many dynamixel motors
  *
  * Emulates dynamixel_controller.
  */
@@ -26,14 +27,14 @@ class DynamixelSim
 {
     public:
         /**
-         * \brief DynamixelSim constructor.
+         * \brief DynamixelSim constructor
          *
-         * \param n : node handle.
+         * \param n     node handle
          */
         DynamixelSim(ros::NodeHandle& n);
         
         /**
-         * \brief DynamixelSim destructor.
+         * \brief DynamixelSim destructor
          */
         ~DynamixelSim();
 
@@ -43,33 +44,33 @@ class DynamixelSim
         void spin();
 
     private:
-        ros::NodeHandle n_; /**< node handle */
-        ros::Rate rate_; /**< loop rate */
+        ros::NodeHandle n_; ///< node handle
+        ros::Rate rate_; ///< loop rate
 
-        int dof_; /**< degrees of freedom */
-        std::vector<MotorSim*> motors_; /**< motors */
-        std::vector<double> positions_; /**< motors positions */
+        int dof_; ///< degrees of freedom
+        std::vector<MotorSim*> motors_; ///< motors
+        std::vector<double> positions_; ///< motors positions
 
-        std::string presentJointStateTopic_; /**< present state topic */
-        std::string goalJointStateTopic_; /**< goal state topic */
+        std::string presentJointStateTopic_; ///< present state topic
+        std::string goalJointStateTopic_; ///< goal state topic
 
         /*===========================
          * Subscribers
          *===========================*/
-        ros::Subscriber goalJointState_sub_; /**< goal jointstate subscriber */
+        ros::Subscriber goalJointState_sub_; ///< goal jointstate subscriber
 
         /*===========================
          * Publishers
          *===========================*/
-        ros::Publisher presentJointState_pub_; /**< present jointstate publisher */
+        ros::Publisher presentJointState_pub_; ///< present jointstate publisher
 
         /*===========================
          * Callbacks
          *===========================*/
         /**
-         * \brief Goal JointState callback.
+         * \brief Goal JointState callback
          *
-         * \param msg : constptr to JointState message.
+         * \param msg   constptr to JointState message
          */
         void goalJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg);
 
@@ -77,27 +78,27 @@ class DynamixelSim
          * Update
          *===========================*/
         /**
-         * \brief Update.
+         * \brief Update
          */
         void update();
 
         /**
-         * \brief Update motors velocities.
+         * \brief Update motor velocities
          */
         void updateMotors();
 
         /**
-         * \brief Update motors positions.
+         * \brief Update motor positions
          */
         void updatePositions();
 
         /**
-         * \brief Publish present jointstate.
+         * \brief Publish present jointstate
          */
         void publishPresentJointState();
 
         /**
-         * \brief ROS spin once, called on every loop.
+         * \brief ROS spin once, called on every loop
          */
         void spinOnce();
 };

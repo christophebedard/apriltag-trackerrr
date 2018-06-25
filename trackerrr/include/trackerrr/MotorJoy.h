@@ -17,21 +17,22 @@ static const double DYNAMIXEL_POSITION_ANGLE_RESOLUTION = (5.0/3.0)*PI;
 static const double DYNAMIXEL_POSITION_MIN = -DYNAMIXEL_POSITION_ANGLE_RESOLUTION/2.0;
 static const double DYNAMIXEL_POSITION_MAX = DYNAMIXEL_POSITION_ANGLE_RESOLUTION/2.0;
 
-/** \class MotorJoy
- * \brief class which helps control motors with a controller/joy.
+/**
+ * \class MotorJoy
+ * \brief class which helps control motors with a controller/joy
  */
 class MotorJoy
 {
     public:
         /**
-         * \brief MotorJoy constructor.
+         * \brief MotorJoy constructor
          *
-         * \param posMin : minimum position value (rad).
+         * \param n     node handle
          */
         MotorJoy(ros::NodeHandle& n);
         
         /**
-         * \brief MotorJoy destructor.
+         * \brief MotorJoy destructor
          */
         ~MotorJoy();
 
@@ -41,30 +42,30 @@ class MotorJoy
         void spin();
 
     private:
-        ros::NodeHandle& n_; /**< node handle */
-        ros::Rate rate_; /**< rate */
+        ros::NodeHandle& n_; ///< node handle
+        ros::Rate rate_; ///< rate
 
-        int dof_; /**< degrees of freedom */
-        std::vector<double> nextGoalState_; /**< next goal state */
-        std::vector<double> vel_; /**< current angular velocities */
+        int dof_; ///< degrees of freedom
+        std::vector<double> nextGoalState_; ///< next goal state
+        std::vector<double> vel_; ///< current angular velocities
 
         /*===========================
          * Publishers
          *===========================*/
-        ros::Publisher presentJointState_pub_; /**< publisher for joint state command */
+        ros::Publisher presentJointState_pub_; ///< publisher for joint state command
 
         /*===========================
          * Subscribers
          *===========================*/
-        ros::Subscriber vel_sub_; /**< controller/joy vel subscriber */
+        ros::Subscriber vel_sub_; ///< controller/joy vel subscriber
 
         /*===========================
          * Callbacks
          *===========================*/
         /**
-         * \brief Callback class method for Twist message.
+         * \brief Callback class method for Twist message
          *
-         * \param msg : constptr to Twist message.
+         * \param msg   constptr to Twist message
          */
         void velCallback(const geometry_msgs::Twist::ConstPtr& msg);
         
@@ -72,22 +73,22 @@ class MotorJoy
          * Update
          *===========================*/
         /**
-         * \brief Update; called every spinOnce().
+         * \brief Update; called every spinOnce()
          */
         void update();
 
         /**
-         * \brief ROS spin once, called on every loop.
+         * \brief ROS spin once, called on every loop
          */
         void spinOnce();
 
         /**
-         * \brief Update position.
+         * \brief Update position
          */
         void updatePosition();
 
         /**
-         * \brief Publish goal state.
+         * \brief Publish goal state
          */
         void publishGoalJointState();
 

@@ -6,6 +6,9 @@
 
 #include "trackerrr/DynamixelSim.h"
 
+/**
+ * \brief Entry point for dynamixelsim_node
+ */
 int main(int argc, char** argv) {
     ros::init(argc, argv, "dynamixelsim");
     ros::NodeHandle n;
