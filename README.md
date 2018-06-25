@@ -57,19 +57,20 @@ Track tags and other features with an RRR robot manipulator.
 
 ### Feature selection
 
-5. Additionally, clone at least one of these, in order to:
-   1. track AprilTags
-      ````
-      cd ~/tracker_ws/src
-      git clone https://github.com/RIVeR-Lab/apriltags_ros.git
-      ````
+Additionally, clone at least one of these, in order to:
 
-   2. track objects with YOLO
-      ````
-      cd ~/tracker_ws/src
-      git clone https://github.com/leggedrobotics/darknet_ros.git
-      ````  
-      Follow instructions [here](https://github.com/leggedrobotics/darknet_ros).
+1. track AprilTags  
+   ````
+   cd ~/tracker_ws/src
+   git clone https://github.com/RIVeR-Lab/apriltags_ros.git
+   ````
+
+2. track objects with YOLO  
+   ````
+   cd ~/tracker_ws/src
+   git clone https://github.com/leggedrobotics/darknet_ros.git
+   ````  
+   Follow instructions [here](https://github.com/leggedrobotics/darknet_ros).
 
 ## Build
 
@@ -116,6 +117,7 @@ Some of the main launch files:
 
 Generate documentation with  
 ````
+cd ~/tracker_ws/src/trackerrr
 doxygen trackerrr/Doxyfile
 ````
 
